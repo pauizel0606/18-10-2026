@@ -2,586 +2,691 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#170d25">
 
 <title>Para ti 💜</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+:root{
+    --bg:#100818;
+    --panel:#1d1029;
+    --panel2:#271537;
+    --purple:#9b6cff;
+    --purple2:#c29cff;
+    --text:#fffaff;
+    --muted:#cdbbda;
+    --line:#49315a;
 }
 
-:root {
-    --purple: #8b5cf6;
-    --purple2: #a78bfa;
-    --dark: #160d24;
-    --dark2: #211032;
-    --white: #fff;
-    --soft: #eadcff;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    min-height: 100vh;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(168,85,247,.22), transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(139,92,246,.18), transparent 30%),
-        linear-gradient(135deg, #100817, #1d0d2b, #12091c);
-    color: white;
-    overflow-x: hidden;
+html,body{
+    margin:0;
+    min-height:100%;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--text);
 }
 
-/* Fondo animado */
-
-.background {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: -1;
+body{
+    overflow-x:hidden;
 }
 
-.orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(50px);
-    opacity: .35;
-    animation: float 10s infinite ease-in-out;
+button,input{
+    font:inherit;
 }
 
-.orb:nth-child(1) {
-    width: 220px;
-    height: 220px;
-    background: #a855f7;
-    left: -60px;
-    top: 10%;
+button{
+    touch-action:manipulation;
 }
 
-.orb:nth-child(2) {
-    width: 300px;
-    height: 300px;
-    background: #7c3aed;
-    right: -100px;
-    top: 50%;
-    animation-delay: -3s;
-}
+/* =========================
+   FONDO
+========================= */
 
-.orb:nth-child(3) {
-    width: 180px;
-    height: 180px;
-    background: #c084fc;
-    left: 40%;
-    bottom: -80px;
-    animation-delay: -6s;
-}
-
-@keyframes float {
-    0%,100% { transform: translate(0,0) scale(1); }
-    50% { transform: translate(30px,-40px) scale(1.15); }
-}
-
-/* Pantalla inicial */
-
-.welcome {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px;
-    text-align: center;
-}
-
-.welcome-box {
-    max-width: 650px;
-    animation: appear .9s ease;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.birthday-icon {
-    font-size: 75px;
-    margin-bottom: 15px;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.welcome h1 {
-    font-size: clamp(42px, 9vw, 75px);
-    background: linear-gradient(90deg,#fff,#d8b4fe,#a78bfa,#fff);
-    background-size: 300%;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gradient 5s infinite;
-}
-
-@keyframes gradient {
-    0% { background-position: 0%; }
-    50% { background-position: 100%; }
-    100% { background-position: 0%; }
-}
-
-.welcome p {
-    color: #d8c9e8;
-    font-size: 18px;
-    margin: 15px auto 30px;
-    line-height: 1.6;
-}
-
-.start-btn,
-.back-btn {
-    border: none;
-    border-radius: 50px;
-    padding: 15px 28px;
-    color: white;
-    background: linear-gradient(135deg,#8b5cf6,#a855f7);
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(139,92,246,.3);
-    transition: .25s;
-}
-
-.start-btn:hover,
-.back-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-}
-
-/* App */
-
-.app {
-    display: none;
-    max-width: 1200px;
-    margin: auto;
-    padding: 25px 18px 50px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: 800;
-}
-
-.score {
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.1);
-    padding: 9px 15px;
-    border-radius: 30px;
-    backdrop-filter: blur(15px);
-}
-
-/* Carta */
-
-.letter {
-    position: relative;
-    background:
-        linear-gradient(135deg,rgba(139,92,246,.28),rgba(168,85,247,.08));
-    border: 1px solid rgba(196,181,253,.25);
-    border-radius: 25px;
-    padding: 28px;
-    margin-bottom: 35px;
-    text-align: center;
-    cursor: pointer;
-    overflow: hidden;
-    transition: .3s;
-}
-
-.letter:hover {
-    transform: translateY(-4px);
-}
-
-.letter-icon {
-    font-size: 50px;
-    margin-bottom: 10px;
-}
-
-.letter h2 {
-    margin-bottom: 7px;
-}
-
-.letter p {
-    color: #d6c7e7;
-}
-
-/* Juegos */
-
-.section-title {
-    margin-bottom: 17px;
-    font-size: 25px;
-}
-
-.games {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 15px;
-}
-
-.game-card {
-    background: rgba(255,255,255,.065);
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 22px;
-    padding: 23px;
-    cursor: pointer;
-    transition: .25s;
-    backdrop-filter: blur(15px);
-}
-
-.game-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(167,139,250,.5);
-    background: rgba(139,92,246,.12);
-}
-
-.game-icon {
-    font-size: 38px;
-    margin-bottom: 13px;
-}
-
-.game-card h3 {
-    margin-bottom: 6px;
-}
-
-.game-card p {
-    color: #bcaaca;
-    font-size: 14px;
-}
-
-/* Modal */
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(5,2,10,.75);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-    padding: 18px;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-box {
-    width: min(650px,100%);
-    max-height: 90vh;
-    overflow-y: auto;
-    background: linear-gradient(145deg,#251035,#160b22);
-    border: 1px solid rgba(196,181,253,.2);
-    border-radius: 28px;
-    padding: 25px;
-    position: relative;
-    animation: modalIn .3s ease;
-}
-
-@keyframes modalIn {
-    from {
-        opacity: 0;
-        transform: scale(.9) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.close {
-    position: absolute;
-    right: 17px;
-    top: 13px;
-    border: none;
-    background: rgba(255,255,255,.08);
-    color: white;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.modal-title {
-    font-size: 28px;
-    margin-bottom: 15px;
-}
-
-/* Game area */
-
-.game-area {
-    margin-top: 15px;
-    min-height: 300px;
-    position: relative;
-}
-
-.game-button {
-    border: none;
-    background: linear-gradient(135deg,#8b5cf6,#a855f7);
-    color: white;
-    border-radius: 14px;
-    padding: 12px 20px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 12px;
-}
-
-/* Billar */
-
-.pool-table {
-    width: 100%;
-    max-width: 550px;
-    aspect-ratio: 1.7;
-    background: #40165c;
-    border: 15px solid #5c2a19;
-    border-radius: 20px;
-    margin: auto;
-    position: relative;
-    box-shadow: inset 0 0 0 5px #1d672d;
-}
-
-.hole {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    background: #08040b;
-    border-radius: 50%;
-}
-
-.hole:nth-child(1){top:-18px;left:-18px}
-.hole:nth-child(2){top:-18px;right:-18px}
-.hole:nth-child(3){bottom:-18px;left:-18px}
-.hole:nth-child(4){bottom:-18px;right:-18px}
-.hole:nth-child(5){top:-18px;left:50%;transform:translateX(-50%)}
-.hole:nth-child(6){bottom:-18px;left:50%;transform:translateX(-50%)}
-
-.ball {
-    position:absolute;
-    width:28px;
-    height:28px;
-    border-radius:50%;
-    background:white;
-    box-shadow: 0 2px 8px #000;
-    cursor:pointer;
-}
-
-/* Dardos */
-
-.dartboard {
-    width: 230px;
-    height: 230px;
-    border-radius: 50%;
-    margin: auto;
-    background:
-        repeating-conic-gradient(
-            #22102d 0deg 18deg,
-            #713d88 18deg 36deg
-        );
-    border: 10px solid #111;
-    box-shadow: 0 10px 30px #0008;
-    position: relative;
-    cursor: crosshair;
-}
-
-.dart-center {
-    position:absolute;
-    width:50px;
-    height:50px;
-    background:#8b5cf6;
-    border-radius:50%;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-}
-
-/* Memoria */
-
-.memory-grid {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-    max-width:400px;
-    margin:auto;
-}
-
-.memory-card {
-    aspect-ratio:1;
-    border:none;
-    border-radius:14px;
-    background:#6d28d9;
-    color:transparent;
-    font-size:28px;
-    cursor:pointer;
-}
-
-.memory-card.flipped,
-.memory-card.matched {
-    background:#a78bfa;
-    color:white;
-}
-
-/* Atrapar */
-
-.catch-area,
-.balloon-area,
-.star-area {
-    height:320px;
-    border-radius:20px;
-    background:rgba(0,0,0,.18);
-    position:relative;
+#bg{
+    position:fixed;
+    inset:0;
+    z-index:-2;
     overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            #6336a633,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            #a855f733,
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #100818,
+            #1a0d25 55%,
+            #0e0715
+        );
 }
 
-.catch-heart,
-.star,
-.balloon {
+.orb{
     position:absolute;
+    border-radius:50%;
+    filter:blur(65px);
+    opacity:.28;
+    animation:float 12s ease-in-out infinite;
+}
+
+.o1{
+    width:260px;
+    height:260px;
+    background:#9b6cff;
+    left:-90px;
+    top:8%;
+}
+
+.o2{
+    width:300px;
+    height:300px;
+    background:#c06cff;
+    right:-120px;
+    top:55%;
+    animation-delay:-5s;
+}
+
+.o3{
+    width:190px;
+    height:190px;
+    background:#6636c9;
+    left:42%;
+    bottom:-80px;
+    animation-delay:-8s;
+}
+
+@keyframes float{
+    50%{
+        transform:
+            translate(35px,-30px)
+            scale(1.15);
+    }
+}
+
+/* =========================
+   PORTADA
+========================= */
+
+.screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+.welcome{
+    text-align:center;
+    max-width:680px;
+}
+
+.cake{
+    font-size:78px;
+    animation:bob 2s ease-in-out infinite;
+}
+
+@keyframes bob{
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+h1{
+    font-size:clamp(42px,9vw,78px);
+    margin:12px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #d6b9ff,
+            #a477ff,
+            #fff
+        );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:shine 5s linear infinite;
+}
+
+@keyframes shine{
+    to{
+        background-position:300%;
+    }
+}
+
+.welcome p{
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.65;
+}
+
+.primary,
+.smallBtn{
+    border:0;
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8256ef,
+            #b06cff
+        );
+
+    border-radius:999px;
+    padding:14px 24px;
+
+    font-weight:800;
     cursor:pointer;
-    user-select:none;
-    animation: pop .2s ease;
+
+    box-shadow:
+        0 10px 30px #7d4ce533;
 }
 
-.catch-heart {
-    font-size:42px;
+/* =========================
+   APP
+========================= */
+
+.app{
+    display:none;
+    max-width:1100px;
+    margin:auto;
+    padding:22px 16px 45px;
 }
 
-.star {
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:800;
+}
+
+.score{
+    background:#ffffff0d;
+    border:1px solid #ffffff14;
+    padding:9px 15px;
+    border-radius:999px;
+}
+
+/* =========================
+   CARTA
+========================= */
+
+.letter{
+    padding:25px;
+    text-align:center;
+
+    border:1px solid #b18ae633;
+    background:#ffffff09;
+
+    border-radius:25px;
+
+    cursor:pointer;
+    margin-bottom:30px;
+
+    transition:.25s;
+}
+
+.letter:hover{
+    transform:translateY(-3px);
+}
+
+.letterIcon{
+    font-size:52px;
+}
+
+.letter p,
+.card p,
+.hint{
+    color:var(--muted);
+}
+
+/* =========================
+   JUEGOS
+========================= */
+
+.sectionTitle{
+    font-size:25px;
+    margin:0 0 15px;
+}
+
+.games{
+    display:grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(210px,1fr)
+        );
+
+    gap:13px;
+}
+
+.card{
+    border:1px solid #ffffff12;
+    background:#ffffff08;
+    border-radius:20px;
+
+    padding:20px;
+
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    border-color:#b38af666;
+    background:#9b6cff10;
+}
+
+.cardIcon{
     font-size:38px;
 }
 
-.balloon {
-    font-size:48px;
+.card h3{
+    margin:10px 0 5px;
 }
 
-@keyframes pop {
-    from {transform:scale(.4);opacity:0}
-    to {transform:scale(1);opacity:1}
+.card p{
+    margin:0;
+    font-size:13px;
+    line-height:1.5;
 }
 
-/* Número */
-
-.number-game {
+footer{
     text-align:center;
-}
-
-.number-game input {
-    width:150px;
-    padding:14px;
-    margin-top:15px;
-    border:none;
-    border-radius:12px;
-    outline:none;
-    text-align:center;
-    font-size:18px;
-}
-
-/* Moneda */
-
-.coin {
-    width:130px;
-    height:130px;
-    margin:25px auto;
-    border-radius:50%;
-    background:linear-gradient(145deg,#c084fc,#7c3aed);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:45px;
-    box-shadow:0 10px 30px #0006;
-}
-
-/* Reacción */
-
-.reaction {
-    text-align:center;
-}
-
-.reaction-box {
-    height:200px;
-    border-radius:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:22px;
-    font-weight:bold;
-    background:#321341;
-    cursor:pointer;
-    margin-top:20px;
-}
-
-.reaction-box.ready {
-    background:#7c3aed;
-}
-
-/* Footer */
-
-footer {
-    text-align:center;
-    color:#806d8d;
-    margin-top:50px;
+    color:#806e89;
+    margin-top:45px;
     font-size:13px;
 }
 
-/* Responsive */
+/* =========================
+   MODAL
+========================= */
 
-@media(max-width:600px) {
+.modal{
+    display:none;
 
-    .app {
-        padding:18px 13px 40px;
+    position:fixed;
+    inset:0;
+
+    background:#07030ccc;
+
+    backdrop-filter:blur(12px);
+
+    z-index:20;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:14px;
+}
+
+.modal.open{
+    display:flex;
+}
+
+.box{
+    width:min(680px,100%);
+    max-height:94vh;
+    overflow:auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #281537,
+            #160b20
+        );
+
+    border:1px solid #a987bd33;
+
+    border-radius:26px;
+
+    padding:22px;
+
+    position:relative;
+}
+
+.close{
+    position:absolute;
+
+    right:12px;
+    top:12px;
+
+    width:42px;
+    height:42px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#ffffff12;
+
+    color:white;
+
+    font-size:25px;
+
+    cursor:pointer;
+}
+
+.title{
+    font-size:28px;
+    margin:
+        4px
+        45px
+        7px
+        0;
+}
+
+.subtitle{
+    color:var(--muted);
+    margin:0 0 15px;
+}
+
+#game{
+    min-height:310px;
+}
+
+.gameBtn{
+    border:0;
+
+    border-radius:13px;
+
+    padding:12px 18px;
+
+    background:#9b6cff;
+
+    color:#fff;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    margin:5px;
+}
+
+.status{
+    text-align:center;
+    color:#e6d7ec;
+    min-height:24px;
+    margin:10px 0;
+}
+
+canvas{
+    display:block;
+
+    width:100%;
+    max-width:620px;
+
+    height:auto;
+
+    margin:auto;
+
+    background:#130b19;
+
+    border-radius:18px;
+
+    border:1px solid #ffffff13;
+
+    touch-action:none;
+}
+
+.gameControls{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+
+    margin:10px 0;
+}
+
+/* =========================
+   CARTA
+========================= */
+
+.letterText{
+    text-align:center;
+
+    padding:18px 8px;
+
+    font-size:18px;
+
+    line-height:1.85;
+
+    color:#eee1f4;
+}
+
+.letterText strong{
+    color:#d0afff;
+}
+
+/* =========================
+   MEMORIA
+========================= */
+
+.memory{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:9px;
+
+    max-width:430px;
+
+    margin:auto;
+}
+
+.mem{
+    aspect-ratio:1;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:#6f45a5;
+
+    color:transparent;
+
+    font-size:28px;
+
+    cursor:pointer;
+}
+
+.mem.open,
+.mem.done{
+    background:#b391dd;
+    color:#fff;
+}
+
+/* =========================
+   NÚMERO
+========================= */
+
+.num{
+    text-align:center;
+}
+
+.num input{
+    width:150px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    border:1px solid var(--line);
+
+    background:#100918;
+
+    color:#fff;
+
+    text-align:center;
+
+    outline:none;
+
+    font-size:18px;
+}
+
+/* =========================
+   CORAZÓN
+========================= */
+
+.bigHeart{
+    font-size:110px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    line-height:1.2;
+}
+
+/* =========================
+   REFLEJOS
+========================= */
+
+.reaction{
+    height:230px;
+
+    border-radius:18px;
+
+    background:#382040;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:23px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    user-select:none;
+}
+
+.reaction.go{
+    background:#4bba82;
+}
+
+/* =========================
+   MONEDA
+========================= */
+
+.coin{
+    width:130px;
+    height:130px;
+
+    border-radius:50%;
+
+    margin:28px auto;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #dfb8ff,
+            #8051c8
+        );
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:48px;
+
+    box-shadow:
+        0 15px 35px #0008;
+
+    transition:
+        transform .55s;
+}
+
+.choice{
+    text-align:center;
+}
+
+.choice button{
+    margin:6px;
+}
+
+/* =========================
+   MÓVIL
+========================= */
+
+@media(max-width:600px){
+
+    .app{
+        padding:
+            16px
+            11px
+            35px;
     }
 
-    .games {
-        grid-template-columns:repeat(2,1fr);
-        gap:10px;
+    .games{
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:9px;
     }
 
-    .game-card {
-        padding:17px;
-        border-radius:18px;
+    .card{
+        padding:16px;
+        border-radius:17px;
     }
 
-    .game-icon {
+    .cardIcon{
         font-size:31px;
     }
 
-    .game-card h3 {
+    .card h3{
         font-size:15px;
     }
 
-    .game-card p {
-        font-size:12px;
+    .card p{
+        font-size:11px;
     }
 
-    .letter {
-        padding:22px 15px;
+    .box{
+        padding:18px;
+        border-radius:23px;
     }
 
-    .modal-box {
-        padding:20px;
+    .title{
+        font-size:24px;
     }
 
-    .memory-grid {
-        gap:7px;
+    .memory{
+        gap:6px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+        animation:none!important;
+        transition:none!important;
     }
 }
 </style>
@@ -589,28 +694,35 @@ footer {
 
 <body>
 
-<div class="background">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
+<div id="bg">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
 </div>
 
-<!-- PORTADA -->
 
-<section class="welcome" id="welcome">
+<!-- =========================
+     PORTADA
+========================= -->
 
-    <div class="welcome-box">
+<section class="screen" id="welcome">
 
-        <div class="birthday-icon">🎂</div>
+    <div class="welcome">
 
-        <h1>Feliz cumpleaños 💜</h1>
+        <div class="cake">
+            🎂
+        </div>
+
+        <h1>
+            Feliz cumpleaños 💜
+        </h1>
 
         <p>
-            He preparado un pequeño lugar solo para ti.<br>
-            Hay juegos, sorpresas y una cosita que quiero decirte.
+            He preparado un pequeño mundo solo para ti.<br>
+            Juegos, retos, sorpresas y una carta que quiero que leas.
         </p>
 
-        <button class="start-btn" onclick="startApp()">
+        <button class="primary" id="start">
             Entrar a tu regalo ✨
         </button>
 
@@ -619,135 +731,281 @@ footer {
 </section>
 
 
-<!-- APP -->
+<!-- =========================
+     WEB
+========================= -->
 
 <main class="app" id="app">
 
-    <header class="header">
+<header>
 
-        <div class="logo">
-            💜 Para ti
-        </div>
-
-        <div class="score">
-            ⭐ <span id="score">0</span>
-        </div>
-
-    </header>
-
-
-    <!-- CARTA -->
-
-    <div class="letter" onclick="openLetter()">
-
-        <div class="letter-icon">💌</div>
-
-        <h2>Tienes una carta</h2>
-
-        <p>Toca aquí para abrirla...</p>
-
+    <div class="logo">
+        💜 Para ti
     </div>
 
+    <div class="score">
+        ⭐ <span id="score">0</span>
+    </div>
 
-    <h2 class="section-title">
-        🎮 Mini juegos
+</header>
+
+
+<!-- CARTA -->
+
+<div class="letter" id="letter">
+
+    <div class="letterIcon">
+        💌
+    </div>
+
+    <h2>
+        Tienes una carta
     </h2>
 
+    <p>
+        Ábrela cuando quieras...
+    </p>
 
-    <section class="games">
+</div>
 
-        <div class="game-card" onclick="openGame('pool')">
-            <div class="game-icon">🎱</div>
-            <h3>Billar</h3>
-            <p>Mete las bolas en los agujeros.</p>
+
+<h2 class="sectionTitle">
+    🎮 Mini juegos
+</h2>
+
+
+<section class="games">
+
+    <article class="card" data-game="pool">
+
+        <div class="cardIcon">
+            🎱
         </div>
 
-        <div class="game-card" onclick="openGame('darts')">
-            <div class="game-icon">🎯</div>
-            <h3>Dardos</h3>
-            <p>Intenta acertar en el centro.</p>
+        <h3>
+            Billar
+        </h3>
+
+        <p>
+            Apunta, elige fuerza y golpea la bola.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="darts">
+
+        <div class="cardIcon">
+            🎯
         </div>
 
-        <div class="game-card" onclick="openGame('memory')">
-            <div class="game-icon">🧠</div>
-            <h3>Memoria</h3>
-            <p>Encuentra todas las parejas.</p>
+        <h3>
+            Dardos
+        </h3>
+
+        <p>
+            Apunta y lanza el dardo al tablero.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="memory">
+
+        <div class="cardIcon">
+            🧠
         </div>
 
-        <div class="game-card" onclick="openGame('hearts')">
-            <div class="game-icon">❤️</div>
-            <h3>Atrapa corazones</h3>
-            <p>Consigue tantos como puedas.</p>
+        <h3>
+            Memoria
+        </h3>
+
+        <p>
+            Encuentra todas las parejas.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="hearts">
+
+        <div class="cardIcon">
+            ❤️
         </div>
 
-        <div class="game-card" onclick="openGame('coin')">
-            <div class="game-icon">🪙</div>
-            <h3>Cara o cruz</h3>
-            <p>¿Qué saldrá?</p>
+        <h3>
+            Atrapa corazones
+        </h3>
+
+        <p>
+            Muévete y atrapa los corazones.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="coin">
+
+        <div class="cardIcon">
+            🪙
         </div>
 
-        <div class="game-card" onclick="openGame('stars')">
-            <div class="game-icon">⭐</div>
-            <h3>Atrapa estrellas</h3>
-            <p>No dejes escapar ninguna.</p>
+        <h3>
+            Cara o cruz
+        </h3>
+
+        <p>
+            Lanza una moneda.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="stars">
+
+        <div class="cardIcon">
+            ⭐
         </div>
 
-        <div class="game-card" onclick="openGame('balloons')">
-            <div class="game-icon">🎈</div>
-            <h3>Globos</h3>
-            <p>Explota todos los que puedas.</p>
+        <h3>
+            Atrapa estrellas
+        </h3>
+
+        <p>
+            Encuentra las estrellas antes de que desaparezcan.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="balloons">
+
+        <div class="cardIcon">
+            🎈
         </div>
 
-        <div class="game-card" onclick="openGame('number')">
-            <div class="game-icon">🔢</div>
-            <h3>Adivina el número</h3>
-            <p>Encuentra el número secreto.</p>
+        <h3>
+            Globos
+        </h3>
+
+        <p>
+            Explótalos mientras suben.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="number">
+
+        <div class="cardIcon">
+            🔢
         </div>
 
-        <div class="game-card" onclick="openGame('reaction')">
-            <div class="game-icon">⚡</div>
-            <h3>Reflejos</h3>
-            <p>Haz clic cuando cambie.</p>
+        <h3>
+            Adivina el número
+        </h3>
+
+        <p>
+            Usa las pistas para encontrarlo.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="reaction">
+
+        <div class="cardIcon">
+            ⚡
         </div>
 
-        <div class="game-card" onclick="openGame('clicker')">
-            <div class="game-icon">💜</div>
-            <h3>Corazón infinito</h3>
-            <p>Haz clic tantas veces como puedas.</p>
+        <h3>
+            Reflejos
+        </h3>
+
+        <p>
+            Comprueba cuánto tardas en reaccionar.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="clicker">
+
+        <div class="cardIcon">
+            💜
         </div>
 
-        <div class="game-card" onclick="openGame('love')">
-            <div class="game-icon">🥰</div>
-            <h3>¿Cuánto me quieres?</h3>
-            <p>Un pequeño test.</p>
+        <h3>
+            Corazón infinito
+        </h3>
+
+        <p>
+            Haz tantos clics como puedas.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="love">
+
+        <div class="cardIcon">
+            🥰
         </div>
 
-        <div class="game-card" onclick="openGame('surprise')">
-            <div class="game-icon">🎁</div>
-            <h3>Sorpresa</h3>
-            <p>Este juego es diferente...</p>
+        <h3>
+            Test de pareja
+        </h3>
+
+        <p>
+            Responde unas preguntas.
+        </p>
+
+    </article>
+
+
+    <article class="card" data-game="surprise">
+
+        <div class="cardIcon">
+            🎁
         </div>
 
-    </section>
+        <h3>
+            La sorpresa
+        </h3>
 
-    <footer>
-        Hecho con mucho cariño 💜
-    </footer>
+        <p>
+            El último regalo está escondido aquí.
+        </p>
+
+    </article>
+
+</section>
+
+
+<footer>
+    Hecho con muchísimo cariño 💜
+</footer>
 
 </main>
 
 
-<!-- MODAL -->
+<!-- =========================
+     MODAL
+========================= -->
 
 <div class="modal" id="modal">
 
-    <div class="modal-box">
+    <div class="box">
 
-        <button class="close" onclick="closeModal()">×</button>
+        <button class="close" id="close">
+            ×
+        </button>
 
-        <h2 class="modal-title" id="modalTitle"></h2>
+        <h2 class="title" id="title"></h2>
 
-        <div class="game-area" id="gameArea"></div>
+        <p class="subtitle" id="subtitle"></p>
+
+        <div id="game"></div>
 
     </div>
 
@@ -756,858 +1014,3101 @@ footer {
 
 <script>
 
+"use strict";
+
+
 let score = 0;
 
-function addScore(points) {
+let timers = [];
 
-    score += points;
+let frames = [];
 
-    document.getElementById("score").textContent = score;
 
+const $ = selector =>
+    document.querySelector(selector);
+
+
+const game =
+    $("#game");
+
+const modal =
+    $("#modal");
+
+
+function addScore(points){
+
+    score =
+        Math.max(
+            0,
+            score + points
+        );
+
+    $("#score").textContent =
+        score;
 }
 
 
-function startApp() {
+function cleanup(){
 
-    document.getElementById("welcome").style.display = "none";
-    document.getElementById("app").style.display = "block";
+    timers.forEach(
+        clearTimeout
+    );
 
+    timers = [];
+
+    frames.forEach(
+        cancelAnimationFrame
+    );
+
+    frames = [];
 }
 
 
-function openLetter() {
+function later(fn,time){
 
-    document.getElementById("modalTitle").textContent = "💌 Una carta para ti";
+    const t =
+        setTimeout(
+            fn,
+            time
+        );
 
-    document.getElementById("gameArea").innerHTML = `
+    timers.push(t);
 
-        <div style="text-align:center;padding:20px 5px">
-
-            <div style="font-size:60px;margin-bottom:20px">💜</div>
-
-            <p style="
-                font-size:19px;
-                line-height:1.8;
-                color:#eadcff;
-            ">
-                Feliz cumpleaños, preciosa.<br><br>
-
-                Espero que hoy sonrías muchísimo,
-                que disfrutes de cada momento
-                y que nunca olvides lo especial
-                que eres para mí.<br><br>
-
-                He preparado todo esto para que
-                tengas un pequeño rincón hecho
-                solamente para ti.<br><br>
-
-                <strong>
-                Te quiero muchísimo. 💜
-                </strong>
-            </p>
-
-        </div>
-    `;
-
-    openModal();
-
+    return t;
 }
 
 
-function openModal() {
+function interval(fn,time){
 
-    document.getElementById("modal").classList.add("active");
+    const t =
+        setInterval(
+            fn,
+            time
+        );
 
+    timers.push(t);
+
+    return t;
 }
 
 
-function closeModal() {
+function open(title,subtitle=""){
 
-    document.getElementById("modal").classList.remove("active");
+    cleanup();
 
+    $("#title").textContent =
+        title;
+
+    $("#subtitle").textContent =
+        subtitle;
+
+    game.innerHTML = "";
+
+    modal.classList.add("open");
 }
 
 
-function openGame(game) {
+function close(){
 
-    openModal();
+    cleanup();
 
-    if(game === "pool") poolGame();
-    if(game === "darts") dartsGame();
-    if(game === "memory") memoryGame();
-    if(game === "hearts") heartsGame();
-    if(game === "coin") coinGame();
-    if(game === "stars") starsGame();
-    if(game === "balloons") balloonsGame();
-    if(game === "number") numberGame();
-    if(game === "reaction") reactionGame();
-    if(game === "clicker") clickerGame();
-    if(game === "love") loveGame();
-    if(game === "surprise") surpriseGame();
+    modal.classList.remove("open");
 
+    game.innerHTML = "";
 }
 
 
 /* =========================
-   BILLAR
+   INICIO
 ========================= */
 
-function poolGame() {
+$("#start").addEventListener(
+    "click",
+    () => {
 
-    document.getElementById("modalTitle").textContent = "🎱 Billar";
+        $("#welcome").style.display =
+            "none";
 
-    document.getElementById("gameArea").innerHTML = `
-
-        <p style="text-align:center;margin-bottom:15px">
-            Haz clic en las bolas para meterlas.
-        </p>
-
-        <div class="pool-table" id="poolTable">
-
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-
-        </div>
-
-    `;
-
-    let table = document.getElementById("poolTable");
-
-    for(let i=0;i<6;i++) {
-
-        let ball = document.createElement("div");
-
-        ball.className = "ball";
-
-        ball.style.left = (15 + Math.random()*70) + "%";
-        ball.style.top = (15 + Math.random()*65) + "%";
-
-        ball.style.background = [
-            "#fff",
-            "#f59e0b",
-            "#ef4444",
-            "#3b82f6",
-            "#22c55e",
-            "#e879f9"
-        ][i];
-
-        ball.onclick = function() {
-
-            ball.remove();
-
-            addScore(5);
-
-        };
-
-        table.appendChild(ball);
+        $("#app").style.display =
+            "block";
 
     }
-
-}
+);
 
 
 /* =========================
-   DARDOS
+   CERRAR
 ========================= */
 
-function dartsGame() {
+$("#close").addEventListener(
+    "click",
+    close
+);
 
-    document.getElementById("modalTitle").textContent = "🎯 Dardos";
 
-    document.getElementById("gameArea").innerHTML = `
+modal.addEventListener(
+    "click",
+    event => {
 
-        <p style="text-align:center">
-            Toca el centro de la diana.
-        </p>
+        if(event.target === modal){
+            close();
+        }
 
-        <div class="dartboard" id="dartboard">
+    }
+);
 
-            <div class="dart-center"></div>
+
+/* =========================
+   CARTA
+========================= */
+
+$("#letter").addEventListener(
+    "click",
+    () => {
+
+        open(
+            "💌 Una carta para ti"
+        );
+
+        game.innerHTML = `
+
+        <div class="letterText">
+
+            Feliz cumpleaños, preciosa. 💜
+
+            <br><br>
+
+            Espero que hoy tengas un día increíble
+            y que sonrías muchísimo.
+
+            <br><br>
+
+            He preparado este pequeño rincón
+            porque quería regalarte algo diferente:
+
+            <br>
+
+            <strong>
+                un lugar hecho especialmente para ti.
+            </strong>
+
+            <br><br>
+
+            Gracias por todos los momentos,
+            por las risas y por estar a mi lado.
+
+            <br><br>
+
+            <strong>
+                Te quiero muchísimo. 💜
+            </strong>
 
         </div>
 
-        <p id="dartScore" style="text-align:center;margin-top:15px">
-            Puntuación: 0
-        </p>
+        `;
+
+    }
+);
+
+
+/* =========================
+   ABRIR JUEGOS
+========================= */
+
+document
+.querySelectorAll(".card")
+.forEach(card => {
+
+    card.addEventListener(
+        "click",
+        () => {
+
+            games[
+                card.dataset.game
+            ]();
+
+        }
+    );
+
+});
+
+
+const games = {};
+
+
+/* =========================================================
+   BILLAR
+========================================================= */
+
+games.pool = function(){
+
+    open(
+        "🎱 Billar",
+        "Arrastra desde la bola blanca para apuntar. Suelta para golpear."
+    );
+
+
+    game.innerHTML = `
+
+        <div class="status"
+             id="poolStatus">
+
+            Bolas: 7 · Golpes: 0
+
+        </div>
+
+
+        <canvas
+            id="pool"
+            width="900"
+            height="530">
+        </canvas>
+
+
+        <div class="gameControls">
+
+            <button
+                class="gameBtn"
+                id="poolReset">
+
+                Reiniciar
+
+            </button>
+
+        </div>
+
     `;
 
-    let board = document.getElementById("dartboard");
 
-    board.onclick = function(e) {
+    const canvas =
+        $("#pool");
 
-        let rect = board.getBoundingClientRect();
+    const ctx =
+        canvas.getContext("2d");
 
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
 
-        let center = rect.width/2;
+    const W = canvas.width;
 
-        let distance = Math.sqrt(
-            Math.pow(x-center,2) +
-            Math.pow(y-center,2)
-        );
+    const H = canvas.height;
 
-        let points = Math.max(
-            1,
-            Math.round(30-distance/3)
-        );
 
-        document.getElementById("dartScore").textContent =
-            "Puntuación: " + points;
+    const table = {
 
-        addScore(points);
+        x:55,
+        y:45,
+        w:790,
+        h:440
 
     };
 
-}
+
+    const pockets = [
+
+        [55,45],
+
+        [450,43],
+
+        [845,45],
+
+        [55,485],
+
+        [450,487],
+
+        [845,485]
+
+    ];
 
 
-/* =========================
-   MEMORIA
-========================= */
+    let balls = [];
 
-function memoryGame() {
+    let dragging = false;
 
-    document.getElementById("modalTitle").textContent = "🧠 Memoria";
+    let mouse = {
+        x:0,
+        y:0
+    };
 
-    const emojis = ["💜","💜","❤️","❤️","🌸","🌸","⭐","⭐"];
+    let shots = 0;
 
-    emojis.sort(() => Math.random()-.5);
 
-    document.getElementById("gameArea").innerHTML = `
+    function reset(){
 
-        <p style="text-align:center;margin-bottom:15px">
-            Encuentra las parejas.
-        </p>
+        balls = [
 
-        <div class="memory-grid" id="memoryGrid"></div>
+            {
+                x:250,
+                y:265,
+                vx:0,
+                vy:0,
+                r:17,
+                color:"#fff",
+                cue:true
+            }
 
-    `;
+        ];
 
-    let grid = document.getElementById("memoryGrid");
 
-    let first = null;
-    let locked = false;
-    let matched = 0;
+        const colors = [
 
-    emojis.forEach(emoji => {
+            "#f3d33b",
+            "#e35b63",
+            "#55a9e8",
+            "#66c984",
+            "#c86ee8",
+            "#f39a44"
 
-        let card = document.createElement("button");
+        ];
 
-        card.className = "memory-card";
 
-        card.textContent = emoji;
+        let number = 0;
 
-        card.onclick = function() {
 
-            if(locked || card.classList.contains("flipped")) return;
+        for(let row=0;row<4;row++){
 
-            card.classList.add("flipped");
+            for(let j=0;j<=row;j++){
 
-            if(!first) {
+                balls.push({
 
-                first = card;
+                    x:
+                        625 +
+                        row * 36,
 
-            } else {
+                    y:
+                        265 +
+                        (j-row/2)*37,
 
-                if(first.textContent === card.textContent) {
+                    vx:0,
+                    vy:0,
 
-                    first.classList.add("matched");
-                    card.classList.add("matched");
+                    r:17,
 
-                    matched += 2;
+                    color:
+                        colors[
+                            number %
+                            colors.length
+                        ],
 
-                    addScore(10);
+                    cue:false
 
-                    first = null;
+                });
 
-                    if(matched === emojis.length) {
+                number++;
 
-                        setTimeout(() => {
-                            alert("¡Has encontrado todas! 💜");
-                        },200);
+            }
+
+        }
+
+
+        shots = 0;
+
+        draw();
+
+    }
+
+
+    function draw(){
+
+        ctx.clearRect(
+            0,
+            0,
+            W,
+            H
+        );
+
+
+        ctx.fillStyle =
+            "#2b1710";
+
+        ctx.fillRect(
+            0,
+            0,
+            W,
+            H
+        );
+
+
+        ctx.fillStyle =
+            "#0d5d3d";
+
+        ctx.fillRect(
+            table.x,
+            table.y,
+            table.w,
+            table.h
+        );
+
+
+        ctx.strokeStyle =
+            "#75401f";
+
+        ctx.lineWidth =
+            28;
+
+        ctx.strokeRect(
+            table.x,
+            table.y,
+            table.w,
+            table.h
+        );
+
+
+        pockets.forEach(
+            pocket => {
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    pocket[0],
+                    pocket[1],
+                    25,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle =
+                    "#09070a";
+
+                ctx.fill();
+
+            }
+        );
+
+
+        balls.forEach(ball => {
+
+            ctx.beginPath();
+
+            ctx.arc(
+                ball.x,
+                ball.y,
+                ball.r,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                ball.color;
+
+            ctx.fill();
+
+            ctx.strokeStyle =
+                "#ffffff44";
+
+            ctx.stroke();
+
+        });
+
+
+        const cue =
+            balls.find(
+                ball => ball.cue
+            );
+
+
+        if(cue && dragging){
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                cue.x,
+                cue.y
+            );
+
+            ctx.lineTo(
+                mouse.x,
+                mouse.y
+            );
+
+            ctx.strokeStyle =
+                "#ffffff99";
+
+            ctx.lineWidth =
+                4;
+
+            ctx.stroke();
+
+
+            const dx =
+                cue.x -
+                mouse.x;
+
+            const dy =
+                cue.y -
+                mouse.y;
+
+
+            const power =
+                Math.min(
+                    1,
+                    Math.hypot(
+                        dx,
+                        dy
+                    ) / 260
+                );
+
+
+            ctx.fillStyle =
+                "#ffffffaa";
+
+            ctx.fillRect(
+                350,
+                15,
+                200 * power,
+                8
+            );
+
+        }
+
+    }
+
+
+    function physics(){
+
+        let moving =
+            false;
+
+
+        balls.forEach(ball => {
+
+            ball.x += ball.vx;
+
+            ball.y += ball.vy;
+
+
+            ball.vx *= .992;
+
+            ball.vy *= .992;
+
+
+            if(
+                Math.hypot(
+                    ball.vx,
+                    ball.vy
+                ) > .08
+            ){
+
+                moving = true;
+
+            }else{
+
+                ball.vx = 0;
+
+                ball.vy = 0;
+
+            }
+
+
+            if(
+                ball.x -
+                ball.r <
+                table.x
+            ){
+
+                ball.x =
+                    table.x +
+                    ball.r;
+
+                ball.vx =
+                    Math.abs(
+                        ball.vx
+                    ) * .88;
+
+            }
+
+
+            if(
+                ball.x +
+                ball.r >
+                table.x +
+                table.w
+            ){
+
+                ball.x =
+                    table.x +
+                    table.w -
+                    ball.r;
+
+                ball.vx =
+                    -Math.abs(
+                        ball.vx
+                    ) * .88;
+
+            }
+
+
+            if(
+                ball.y -
+                ball.r <
+                table.y
+            ){
+
+                ball.y =
+                    table.y +
+                    ball.r;
+
+                ball.vy =
+                    Math.abs(
+                        ball.vy
+                    ) * .88;
+
+            }
+
+
+            if(
+                ball.y +
+                ball.r >
+                table.y +
+                table.h
+            ){
+
+                ball.y =
+                    table.y +
+                    table.h -
+                    ball.r;
+
+                ball.vy =
+                    -Math.abs(
+                        ball.vy
+                    ) * .88;
+
+            }
+
+        });
+
+
+        for(
+            let i=0;
+            i<balls.length;
+            i++
+        ){
+
+            for(
+                let j=i+1;
+                j<balls.length;
+                j++
+            ){
+
+                const a =
+                    balls[i];
+
+                const b =
+                    balls[j];
+
+
+                const dx =
+                    b.x-a.x;
+
+                const dy =
+                    b.y-a.y;
+
+                const distance =
+                    Math.hypot(
+                        dx,
+                        dy
+                    );
+
+                const minDistance =
+                    a.r+b.r;
+
+
+                if(
+                    distance > 0 &&
+                    distance <
+                    minDistance
+                ){
+
+                    const nx =
+                        dx/distance;
+
+                    const ny =
+                        dy/distance;
+
+
+                    const overlap =
+                        minDistance -
+                        distance;
+
+
+                    a.x -=
+                        nx *
+                        overlap /
+                        2;
+
+                    a.y -=
+                        ny *
+                        overlap /
+                        2;
+
+
+                    b.x +=
+                        nx *
+                        overlap /
+                        2;
+
+                    b.y +=
+                        ny *
+                        overlap /
+                        2;
+
+
+                    const relative =
+                        (
+                            a.vx-b.vx
+                        ) * nx +
+                        (
+                            a.vy-b.vy
+                        ) * ny;
+
+
+                    if(relative > 0){
+
+                        a.vx -=
+                            relative*nx;
+
+                        a.vy -=
+                            relative*ny;
+
+                        b.vx +=
+                            relative*nx;
+
+                        b.vy +=
+                            relative*ny;
 
                     }
-
-                } else {
-
-                    locked = true;
-
-                    setTimeout(() => {
-
-                        first.classList.remove("flipped");
-                        card.classList.remove("flipped");
-
-                        first = null;
-                        locked = false;
-
-                    },700);
 
                 }
 
             }
 
-        };
+        }
 
-        grid.appendChild(card);
 
-    });
+        for(
+            let i=balls.length-1;
+            i>=0;
+            i--
+        ){
 
-}
+            const ball =
+                balls[i];
 
 
-/* =========================
-   CORAZONES
-========================= */
+            for(
+                const pocket of pockets
+            ){
 
-function heartsGame() {
+                if(
+                    Math.hypot(
+                        ball.x-pocket[0],
+                        ball.y-pocket[1]
+                    ) < 23
+                ){
 
-    document.getElementById("modalTitle").textContent = "❤️ Atrapa corazones";
+                    if(ball.cue){
 
-    document.getElementById("gameArea").innerHTML = `
+                        ball.x=250;
+                        ball.y=265;
+                        ball.vx=0;
+                        ball.vy=0;
 
-        <p style="text-align:center">
-            ¡Tienes 20 segundos!
-        </p>
+                    }else{
 
-        <div class="catch-area" id="heartArea"></div>
+                        balls.splice(
+                            i,
+                            1
+                        );
 
-        <p style="text-align:center;margin-top:10px">
-            ❤️ <span id="heartScore">0</span>
-        </p>
-    `;
+                        addScore(10);
 
-    let area = document.getElementById("heartArea");
-    let points = 0;
-    let active = true;
+                    }
 
-    function spawn() {
+                    break;
 
-        if(!active) return;
-
-        let heart = document.createElement("div");
-
-        heart.className = "catch-heart";
-        heart.textContent = "❤️";
-
-        heart.style.left = Math.random()*85 + "%";
-        heart.style.top = Math.random()*80 + "%";
-
-        heart.onclick = function() {
-
-            points++;
-
-            document.getElementById("heartScore").textContent = points;
-
-            addScore(1);
-
-            heart.remove();
-
-        };
-
-        area.appendChild(heart);
-
-        setTimeout(() => {
-
-            if(heart.parentNode) heart.remove();
-
-        },1000);
-
-    }
-
-    let interval = setInterval(spawn,500);
-
-    setTimeout(() => {
-
-        active = false;
-        clearInterval(interval);
-
-        alert("¡Has conseguido " + points + " corazones! ❤️");
-
-    },20000);
-
-}
-
-
-/* =========================
-   MONEDA
-========================= */
-
-function coinGame() {
-
-    document.getElementById("modalTitle").textContent = "🪙 Cara o cruz";
-
-    document.getElementById("gameArea").innerHTML = `
-
-        <div class="coin" id="coin">
-            🪙
-        </div>
-
-        <div style="text-align:center">
-
-            <button class="game-button" onclick="flipCoin()">
-                Lanzar moneda
-            </button>
-
-            <p id="coinResult" style="margin-top:15px">
-                ¿Cara o cruz?
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-function flipCoin() {
-
-    let result = Math.random() < .5 ? "🙂 CARA" : "🟣 CRUZ";
-
-    let coin = document.getElementById("coin");
-
-    coin.style.transform = "rotateY(720deg)";
-
-    setTimeout(() => {
-
-        coin.style.transform = "";
-
-        document.getElementById("coinResult").textContent = result;
-
-    },500);
-
-}
-
-
-/* =========================
-   ESTRELLAS
-========================= */
-
-function starsGame() {
-
-    document.getElementById("modalTitle").textContent = "⭐ Atrapa estrellas";
-
-    document.getElementById("gameArea").innerHTML = `
-
-        <p style="text-align:center">
-            ¡Atrapa 10 estrellas!
-        </p>
-
-        <div class="star-area" id="starArea"></div>
-
-        <p style="text-align:center">
-            ⭐ <span id="starScore">0</span>/10
-        </p>
-    `;
-
-    let area = document.getElementById("starArea");
-    let points = 0;
-
-    function createStar() {
-
-        let star = document.createElement("div");
-
-        star.className = "star";
-        star.textContent = "⭐";
-
-        star.style.left = Math.random()*85 + "%";
-        star.style.top = Math.random()*80 + "%";
-
-        star.onclick = function() {
-
-            points++;
-
-            document.getElementById("starScore").textContent = points;
-
-            addScore(2);
-
-            star.remove();
-
-            if(points >= 10) {
-
-                alert("¡Has atrapado todas las estrellas! ✨");
-
-            } else {
-
-                createStar();
+                }
 
             }
 
-        };
+        }
 
-        area.appendChild(star);
+
+        $("#poolStatus")
+        .textContent =
+            `Bolas: ${
+                balls.filter(
+                    b=>!b.cue
+                ).length
+            } · Golpes: ${shots}`;
+
+
+        draw();
+
+
+        if(moving){
+
+            frames.push(
+                requestAnimationFrame(
+                    physics
+                )
+            );
+
+        }
 
     }
 
-    createStar();
 
-}
+    function position(event){
+
+        const rect =
+            canvas.getBoundingClientRect();
 
 
-/* =========================
-   GLOBOS
-========================= */
+        return {
 
-function balloonsGame() {
+            x:
+                (
+                    event.clientX -
+                    rect.left
+                ) *
+                W /
+                rect.width,
 
-    document.getElementById("modalTitle").textContent = "🎈 Explota los globos";
+            y:
+                (
+                    event.clientY -
+                    rect.top
+                ) *
+                H /
+                rect.height
 
-    document.getElementById("gameArea").innerHTML = `
+        };
 
-        <p style="text-align:center">
-            ¡Explota todos!
-        </p>
+    }
 
-        <div class="balloon-area" id="balloonArea"></div>
+
+    canvas.addEventListener(
+        "pointerdown",
+        event => {
+
+            const p =
+                position(event);
+
+            const cue =
+                balls.find(
+                    b=>b.cue
+                );
+
+
+            if(!cue)
+                return;
+
+
+            const moving =
+                balls.some(
+                    b =>
+                    Math.hypot(
+                        b.vx,
+                        b.vy
+                    ) > .1
+                );
+
+
+            if(moving)
+                return;
+
+
+            if(
+                Math.hypot(
+                    p.x-cue.x,
+                    p.y-cue.y
+                ) < 45
+            ){
+
+                dragging=true;
+
+                mouse=p;
+
+                canvas.setPointerCapture(
+                    event.pointerId
+                );
+
+            }
+
+        }
+    );
+
+
+    canvas.addEventListener(
+        "pointermove",
+        event => {
+
+            if(dragging){
+
+                mouse =
+                    position(event);
+
+                draw();
+
+            }
+
+        }
+    );
+
+
+    canvas.addEventListener(
+        "pointerup",
+        event => {
+
+            if(!dragging)
+                return;
+
+
+            dragging=false;
+
+
+            const cue =
+                balls.find(
+                    b=>b.cue
+                );
+
+
+            const p =
+                position(event);
+
+
+            const dx =
+                cue.x-p.x;
+
+            const dy =
+                cue.y-p.y;
+
+
+            const length =
+                Math.hypot(
+                    dx,
+                    dy
+                );
+
+
+            if(length > 12){
+
+                const power =
+                    Math.min(
+                        18,
+                        length/12
+                    );
+
+
+                cue.vx =
+                    dx/length*power;
+
+                cue.vy =
+                    dy/length*power;
+
+
+                shots++;
+
+
+                frames.push(
+                    requestAnimationFrame(
+                        physics
+                    )
+                );
+
+            }
+
+        }
+    );
+
+
+    $("#poolReset")
+    .addEventListener(
+        "click",
+        reset
+    );
+
+
+    reset();
+
+};
+
+
+/* =========================================================
+   DARDOS
+========================================================= */
+
+games.darts = function(){
+
+    open(
+        "🎯 Dardos",
+        "Toca exactamente donde quieras lanzar el dardo."
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="status"
+            id="dartStatus">
+
+            Puntuación: 0 · Dardos: 0/5
+
+        </div>
+
+
+        <canvas
+            id="dart"
+            width="700"
+            height="600">
+        </canvas>
+
+
+        <div class="gameControls">
+
+            <button
+                class="gameBtn"
+                id="dartReset">
+
+                Nueva partida
+
+            </button>
+
+        </div>
 
     `;
 
-    let area = document.getElementById("balloonArea");
 
-    for(let i=0;i<12;i++) {
+    const canvas =
+        $("#dart");
 
-        let balloon = document.createElement("div");
+    const ctx =
+        canvas.getContext("2d");
 
-        balloon.className = "balloon";
 
-        balloon.textContent = ["🎈","🎈","🎈","🎈"][Math.floor(Math.random()*4)];
+    const cx=350;
+    const cy=285;
+    const R=220;
 
-        balloon.style.left = Math.random()*85 + "%";
-        balloon.style.top = Math.random()*80 + "%";
 
-        balloon.onclick = function() {
+    let total=0;
+    let count=0;
 
-            balloon.textContent = "💥";
 
-            addScore(3);
+    function draw(target=null){
 
-            setTimeout(() => balloon.remove(),150);
+        ctx.clearRect(
+            0,
+            0,
+            700,
+            600
+        );
 
-        };
 
-        area.appendChild(balloon);
+        ctx.fillStyle =
+            "#120a18";
+
+        ctx.fillRect(
+            0,
+            0,
+            700,
+            600
+        );
+
+
+        const rings = [
+
+            [220,"#25182b"],
+
+            [190,"#8e6a9e"],
+
+            [135,"#26172e"],
+
+            [82,"#a984bd"],
+
+            [35,"#26172e"],
+
+            [15,"#c9a6df"]
+
+        ];
+
+
+        rings.forEach(
+            ring => {
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    cx,
+                    cy,
+                    ring[0],
+                    0,
+                    Math.PI*2
+                );
+
+                ctx.fillStyle =
+                    ring[1];
+
+                ctx.fill();
+
+            }
+        );
+
+
+        for(
+            let i=0;
+            i<20;
+            i++
+        ){
+
+            const angle =
+                i*Math.PI/10 -
+                Math.PI/2;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                cx,
+                cy
+            );
+
+            ctx.lineTo(
+                cx+
+                220*
+                Math.cos(angle),
+
+                cy+
+                220*
+                Math.sin(angle)
+            );
+
+            ctx.strokeStyle =
+                "#ffffff33";
+
+            ctx.stroke();
+
+        }
+
+
+        if(target){
+
+            ctx.beginPath();
+
+            ctx.arc(
+                target.x,
+                target.y,
+                6,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle =
+                "#fff";
+
+            ctx.fill();
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                cx,
+                cy
+            );
+
+            ctx.lineTo(
+                target.x,
+                target.y
+            );
+
+            ctx.strokeStyle =
+                "#fff9";
+
+            ctx.lineWidth=3;
+
+            ctx.stroke();
+
+        }
 
     }
 
-}
+
+    canvas.addEventListener(
+        "pointerdown",
+        event => {
+
+            if(count>=5)
+                return;
 
 
-/* =========================
-   NÚMERO
-========================= */
+            const rect =
+                canvas.getBoundingClientRect();
 
-let secretNumber = 0;
 
-function numberGame() {
+            const p={
 
-    secretNumber = Math.floor(Math.random()*50)+1;
+                x:
+                    (
+                        event.clientX -
+                        rect.left
+                    ) *
+                    700 /
+                    rect.width,
 
-    document.getElementById("modalTitle").textContent =
-        "🔢 Adivina el número";
+                y:
+                    (
+                        event.clientY -
+                        rect.top
+                    ) *
+                    600 /
+                    rect.height
 
-    document.getElementById("gameArea").innerHTML = `
+            };
 
-        <div class="number-game">
 
-            <p>
-                Estoy pensando en un número del 1 al 50.
+            const distance =
+                Math.hypot(
+                    p.x-cx,
+                    p.y-cy
+                );
+
+
+            let points;
+
+
+            if(distance>220)
+                points=0;
+
+            else if(distance<15)
+                points=50;
+
+            else if(distance<35)
+                points=25;
+
+            else if(distance<82)
+                points=15;
+
+            else if(distance<135)
+                points=10;
+
+            else if(distance<190)
+                points=5;
+
+            else
+                points=1;
+
+
+            total += points;
+
+            count++;
+
+
+            addScore(points);
+
+
+            $("#dartStatus")
+            .textContent =
+                `Puntuación: ${total} · Dardos: ${count}/5`;
+
+
+            draw(p);
+
+
+            if(count===5){
+
+                later(
+                    () => {
+
+                        $("#dartStatus")
+                        .textContent +=
+                            ` · ¡Final: ${total}!`;
+
+                    },
+                    250
+                );
+
+            }
+
+        }
+    );
+
+
+    $("#dartReset")
+    .addEventListener(
+        "click",
+        () => {
+
+            total=0;
+
+            count=0;
+
+            $("#dartStatus")
+            .textContent =
+                "Puntuación: 0 · Dardos: 0/5";
+
+            draw();
+
+        }
+    );
+
+
+    draw();
+
+};
+
+
+/* =========================================================
+   MEMORIA
+========================================================= */
+
+games.memory = function(){
+
+    open(
+        "🧠 Memoria",
+        "Encuentra todas las parejas."
+    );
+
+
+    const values=[
+
+        "💜",
+        "❤️",
+        "🌸",
+        "⭐",
+        "🍓",
+        "🐱",
+        "🎀",
+        "🦋"
+
+    ].flatMap(
+        value => [
+            value,
+            value
+        ]
+    )
+    .sort(
+        () =>
+            Math.random()-.5
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="status"
+            id="memStatus">
+
+            Movimientos: 0 · Parejas: 0/8
+
+        </div>
+
+
+        <div
+            class="memory"
+            id="memory">
+        </div>
+
+    `;
+
+
+    const grid =
+        $("#memory");
+
+
+    let first=null;
+    let locked=false;
+    let moves=0;
+    let matched=0;
+
+
+    values.forEach(
+        value => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "mem";
+
+
+            button.textContent =
+                value;
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    if(
+                        locked ||
+                        button.classList.contains(
+                            "done"
+                        ) ||
+                        button===first
+                    )
+                        return;
+
+
+                    button.classList.add(
+                        "open"
+                    );
+
+
+                    if(!first){
+
+                        first=button;
+
+                        return;
+
+                    }
+
+
+                    moves++;
+
+
+                    if(
+                        first.textContent ===
+                        button.textContent
+                    ){
+
+                        first.classList.add(
+                            "done"
+                        );
+
+                        button.classList.add(
+                            "done"
+                        );
+
+
+                        matched++;
+
+
+                        addScore(12);
+
+
+                        first=null;
+
+                    }else{
+
+                        locked=true;
+
+
+                        const old =
+                            first;
+
+
+                        later(
+                            () => {
+
+                                old.classList.remove(
+                                    "open"
+                                );
+
+                                button.classList.remove(
+                                    "open"
+                                );
+
+                                first=null;
+
+                                locked=false;
+
+                            },
+                            650
+                        );
+
+                    }
+
+
+                    $("#memStatus")
+                    .textContent =
+                        `Movimientos: ${moves} · Parejas: ${matched}/8`;
+
+
+                    if(matched===8){
+
+                        later(
+                            () => alert(
+                                "¡Has encontrado todas las parejas! 💜"
+                            ),
+                            250
+                        );
+
+                    }
+
+                }
+            );
+
+
+            grid.appendChild(
+                button
+            );
+
+        }
+    );
+
+};
+
+
+/* =========================================================
+   ATRAPA CORAZONES
+========================================================= */
+
+games.hearts = function(){
+
+    open(
+        "❤️ Atrapa corazones",
+        "Muévete con el dedo o con ← →. Tienes 30 segundos."
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="status"
+            id="heartStatus">
+
+            ❤️ 0 · Tiempo: 30
+
+        </div>
+
+
+        <canvas
+            id="heartCanvas"
+            width="700"
+            height="520">
+        </canvas>
+
+    `;
+
+
+    const canvas =
+        $("#heartCanvas");
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const player={
+
+        x:350,
+
+        y:470,
+
+        w:90,
+
+        h:25
+
+    };
+
+
+    const items=[];
+
+
+    let heartScore=0;
+
+    let start=
+        performance.now();
+
+    let last=0;
+
+    let left=false;
+
+    let right=false;
+
+
+    function spawn(){
+
+        items.push({
+
+            x:
+                25+
+                Math.random()*650,
+
+            y:-30,
+
+            v:
+                2+
+                Math.random()*3,
+
+            s:
+                24+
+                Math.random()*12
+
+        });
+
+    }
+
+
+    const spawnTimer =
+        interval(
+            spawn,
+            650
+        );
+
+
+    function loop(time){
+
+        const dt =
+            Math.min(
+                32,
+                time-last || 16
+            );
+
+
+        last=time;
+
+
+        player.x +=
+            (right?7:0) -
+            (left?7:0);
+
+
+        player.x =
+            Math.max(
+                0,
+                Math.min(
+                    610,
+                    player.x
+                )
+            );
+
+
+        ctx.clearRect(
+            0,
+            0,
+            700,
+            520
+        );
+
+
+        ctx.fillStyle =
+            "#130a1b";
+
+        ctx.fillRect(
+            0,
+            0,
+            700,
+            520
+        );
+
+
+        ctx.fillStyle =
+            "#9b6cff";
+
+        ctx.fillRect(
+            player.x,
+            player.y,
+            player.w,
+            player.h
+        );
+
+
+        for(
+            let i=items.length-1;
+            i>=0;
+            i--
+        ){
+
+            const item =
+                items[i];
+
+
+            item.y +=
+                item.v *
+                dt/16;
+
+
+            ctx.font =
+                `${item.s}px sans-serif`;
+
+
+            ctx.fillText(
+                "❤️",
+                item.x,
+                item.y
+            );
+
+
+            if(
+                item.y >
+                player.y-5 &&
+
+                item.y <
+                player.y+30 &&
+
+                item.x >
+                player.x-15 &&
+
+                item.x <
+                player.x+
+                player.w
+            ){
+
+                items.splice(
+                    i,
+                    1
+                );
+
+                heartScore++;
+
+                addScore(2);
+
+            }
+
+            else if(
+                item.y>540
+            ){
+
+                items.splice(
+                    i,
+                    1
+                );
+
+            }
+
+        }
+
+
+        const seconds =
+            Math.max(
+                0,
+                30 -
+                Math.floor(
+                    (
+                        time-start
+                    )/1000
+                )
+            );
+
+
+        $("#heartStatus")
+        .textContent =
+            `❤️ ${heartScore} · Tiempo: ${seconds}`;
+
+
+        if(seconds>0){
+
+            frames.push(
+                requestAnimationFrame(
+                    loop
+                )
+            );
+
+        }else{
+
+            clearInterval(
+                spawnTimer
+            );
+
+            alert(
+                `¡Has atrapado ${heartScore} corazones! ❤️`
+            );
+
+        }
+
+    }
+
+
+    window.addEventListener(
+        "keydown",
+        event => {
+
+            if(
+                event.key==="ArrowLeft"
+            )
+                left=true;
+
+            if(
+                event.key==="ArrowRight"
+            )
+                right=true;
+
+        }
+    );
+
+
+    window.addEventListener(
+        "keyup",
+        event => {
+
+            if(
+                event.key==="ArrowLeft"
+            )
+                left=false;
+
+            if(
+                event.key==="ArrowRight"
+            )
+                right=false;
+
+        }
+    );
+
+
+    canvas.addEventListener(
+        "pointermove",
+        event => {
+
+            const rect =
+                canvas.getBoundingClientRect();
+
+
+            player.x =
+                (
+                    event.clientX -
+                    rect.left
+                ) *
+                700 /
+                rect.width -
+                player.w/2;
+
+        }
+    );
+
+
+    frames.push(
+        requestAnimationFrame(
+            loop
+        )
+    );
+
+};
+
+
+/* =========================================================
+   MONEDA
+========================================================= */
+
+games.coin = function(){
+
+    open(
+        "🪙 Cara o cruz",
+        "Lanza la moneda y descubre qué sale."
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="coin"
+            id="coin">
+
+            🪙
+
+        </div>
+
+
+        <div class="choice">
+
+            <button
+                class="gameBtn"
+                id="flip">
+
+                Lanzar moneda
+
+            </button>
+
+
+            <p
+                class="status"
+                id="coinStatus">
+
+                ¿Cara o cruz?
+
             </p>
 
+        </div>
+
+    `;
+
+
+    $("#flip")
+    .addEventListener(
+        "click",
+        () => {
+
+            const coin =
+                $("#coin");
+
+
+            coin.style.transform =
+                `rotateY(${
+                    720+
+                    Math.random()*720
+                }deg)`;
+
+
+            const result =
+                Math.random()<.5
+                ? "🙂 CARA"
+                : "🟣 CRUZ";
+
+
+            later(
+                () => {
+
+                    $("#coinStatus")
+                    .textContent =
+                        `Ha salido ${result}`;
+
+                },
+                500
+            );
+
+        }
+    );
+
+};
+
+
+/* =========================================================
+   ESTRELLAS
+========================================================= */
+
+games.stars = function(){
+
+    open(
+        "⭐ Atrapa estrellas",
+        "Toca las estrellas antes de que desaparezcan."
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="status"
+            id="starStatus">
+
+            ⭐ 0/15
+
+        </div>
+
+
+        <canvas
+            id="stars"
+            width="700"
+            height="520">
+        </canvas>
+
+    `;
+
+
+    const canvas =
+        $("#stars");
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const items=[];
+
+    let count=0;
+
+
+    function spawn(){
+
+        items.push({
+
+            x:
+                30+
+                Math.random()*640,
+
+            y:
+                30+
+                Math.random()*460,
+
+            life:110
+
+        });
+
+    }
+
+
+    interval(
+        spawn,
+        500
+    );
+
+
+    spawn();
+
+
+    canvas.addEventListener(
+        "pointerdown",
+        event => {
+
+            const rect =
+                canvas.getBoundingClientRect();
+
+
+            const p={
+
+                x:
+                    (
+                        event.clientX -
+                        rect.left
+                    ) *
+                    700 /
+                    rect.width,
+
+                y:
+                    (
+                        event.clientY -
+                        rect.top
+                    ) *
+                    520 /
+                    rect.height
+
+            };
+
+
+            for(
+                let i=items.length-1;
+                i>=0;
+                i--
+            ){
+
+                if(
+                    Math.hypot(
+                        p.x-items[i].x,
+                        p.y-items[i].y
+                    ) < 28
+                ){
+
+                    items.splice(
+                        i,
+                        1
+                    );
+
+                    count++;
+
+                    addScore(3);
+
+                    break;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    function loop(){
+
+        ctx.clearRect(
+            0,
+            0,
+            700,
+            520
+        );
+
+
+        ctx.fillStyle =
+            "#130a1b";
+
+        ctx.fillRect(
+            0,
+            0,
+            700,
+            520
+        );
+
+
+        items.forEach(
+            item => {
+
+                item.life--;
+
+                ctx.font =
+                    "35px sans-serif";
+
+                ctx.fillText(
+                    "⭐",
+                    item.x,
+                    item.y
+                );
+
+            }
+        );
+
+
+        for(
+            let i=items.length-1;
+            i>=0;
+            i--
+        ){
+
+            if(
+                items[i].life<=0
+            ){
+
+                items.splice(
+                    i,
+                    1
+                );
+
+            }
+
+        }
+
+
+        $("#starStatus")
+        .textContent =
+            `⭐ ${count}/15`;
+
+
+        if(count<15){
+
+            frames.push(
+                requestAnimationFrame(
+                    loop
+                )
+            );
+
+        }else{
+
+            alert(
+                "¡Has atrapado todas las estrellas! ✨"
+            );
+
+        }
+
+    }
+
+
+    frames.push(
+        requestAnimationFrame(
+            loop
+        )
+    );
+
+};
+
+
+/* =========================================================
+   GLOBOS
+========================================================= */
+
+games.balloons = function(){
+
+    open(
+        "🎈 Explota los globos",
+        "Los globos suben. Explota 20 antes de que escapen."
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="status"
+            id="balStatus">
+
+            🎈 0/20
+
+        </div>
+
+
+        <canvas
+            id="bal"
+            width="700"
+            height="520">
+        </canvas>
+
+    `;
+
+
+    const canvas =
+        $("#bal");
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const balloons=[];
+
+    let count=0;
+
+    let last=0;
+
+
+    function spawn(){
+
+        balloons.push({
+
+            x:
+                25+
+                Math.random()*650,
+
+            y:540,
+
+            r:
+                18+
+                Math.random()*13,
+
+            v:
+                1+
+                Math.random()*2
+
+        });
+
+    }
+
+
+    interval(
+        spawn,
+        550
+    );
+
+
+    spawn();
+
+
+    canvas.addEventListener(
+        "pointerdown",
+        event => {
+
+            const rect =
+                canvas.getBoundingClientRect();
+
+
+            const p={
+
+                x:
+                    (
+                        event.clientX-
+                        rect.left
+                    ) *
+                    700/
+                    rect.width,
+
+                y:
+                    (
+                        event.clientY-
+                        rect.top
+                    ) *
+                    520/
+                    rect.height
+
+            };
+
+
+            for(
+                let i=balloons.length-1;
+                i>=0;
+                i--
+            ){
+
+                const balloon =
+                    balloons[i];
+
+
+                if(
+                    Math.hypot(
+                        p.x-balloon.x,
+                        p.y-balloon.y
+                    ) <
+                    balloon.r+8
+                ){
+
+                    balloons.splice(
+                        i,
+                        1
+                    );
+
+                    count++;
+
+                    addScore(3);
+
+                    break;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    function loop(time){
+
+        const dt =
+            Math.min(
+                30,
+                time-last || 16
+            );
+
+
+        last=time;
+
+
+        ctx.clearRect(
+            0,
+            0,
+            700,
+            520
+        );
+
+
+        ctx.fillStyle =
+            "#130a1b";
+
+        ctx.fillRect(
+            0,
+            0,
+            700,
+            520
+        );
+
+
+        balloons.forEach(
+            balloon => {
+
+                balloon.y -=
+                    balloon.v *
+                    dt/16;
+
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    balloon.x,
+                    balloon.y,
+                    balloon.r,
+                    0,
+                    Math.PI*2
+                );
+
+
+                ctx.fillStyle =
+                    "#a477d0";
+
+                ctx.fill();
+
+
+                ctx.strokeStyle =
+                    "#fff5";
+
+                ctx.stroke();
+
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    balloon.x,
+                    balloon.y+
+                    balloon.r
+                );
+
+                ctx.lineTo(
+                    balloon.x,
+                    balloon.y+
+                    balloon.r+
+                    25
+                );
+
+                ctx.strokeStyle =
+                    "#aaa";
+
+                ctx.stroke();
+
+            }
+        );
+
+
+        for(
+            let i=balloons.length-1;
+            i>=0;
+            i--
+        ){
+
+            if(
+                balloons[i].y<-40
+            ){
+
+                balloons.splice(
+                    i,
+                    1
+                );
+
+            }
+
+        }
+
+
+        $("#balStatus")
+        .textContent =
+            `🎈 ${count}/20`;
+
+
+        if(count<20){
+
+            frames.push(
+                requestAnimationFrame(
+                    loop
+                )
+            );
+
+        }else{
+
+            alert(
+                "¡Has explotado los 20 globos! 🎉"
+            );
+
+        }
+
+    }
+
+
+    frames.push(
+        requestAnimationFrame(
+            loop
+        )
+    );
+
+};
+
+
+/* =========================================================
+   NÚMERO
+========================================================= */
+
+games.number = function(){
+
+    open(
+        "🔢 Adivina el número",
+        "Tienes 7 intentos."
+    );
+
+
+    const secret =
+        1+
+        Math.floor(
+            Math.random()*100
+        );
+
+
+    let tries=0;
+
+
+    game.innerHTML = `
+
+        <div class="num">
+
+            <p>
+                Estoy pensando en un número
+                del 1 al 100.
+            </p>
+
+
             <input
-                id="numberInput"
+                id="guess"
                 type="number"
                 min="1"
-                max="50"
-                placeholder="Número"
+                max="100"
+                placeholder="1 - 100"
             >
+
 
             <br>
 
-            <button class="game-button" onclick="checkNumber()">
+
+            <button
+                class="gameBtn"
+                id="guessBtn">
+
                 Comprobar
+
             </button>
 
-            <p id="numberResult" style="margin-top:20px"></p>
+
+            <div
+                class="status"
+                id="guessStatus">
+
+                Intentos: 0/7
+
+            </div>
 
         </div>
 
     `;
 
-}
+
+    $("#guessBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            const value =
+                Math.max(
+                    1,
+                    Math.min(
+                        100,
+                        Number(
+                            $("#guess").value
+                        ) || 1
+                    )
+                );
 
 
-function checkNumber() {
+            tries++;
 
-    let value = Number(
-        document.getElementById("numberInput").value
+
+            if(value===secret){
+
+                $("#guessStatus")
+                .textContent =
+                    "🎉 ¡Correcto!";
+
+
+                addScore(30);
+
+            }
+
+            else if(
+                tries>=7
+            ){
+
+                $("#guessStatus")
+                .textContent =
+                    `Se acabaron los intentos. Era ${secret}.`;
+
+            }
+
+            else{
+
+                $("#guessStatus")
+                .textContent =
+                    `${
+                        value<secret
+                        ? "⬆️ Más grande"
+                        : "⬇️ Más pequeño"
+                    } · Intentos: ${tries}/7`;
+
+            }
+
+        }
     );
 
-    let result = document.getElementById("numberResult");
+};
 
-    if(value === secretNumber) {
 
-        result.textContent = "🎉 ¡Correcto!";
+/* =========================================================
+   REFLEJOS
+========================================================= */
 
-        addScore(20);
+games.reaction = function(){
 
-    } else if(value < secretNumber) {
+    open(
+        "⚡ Reflejos",
+        "Espera al verde y toca lo más rápido posible."
+    );
 
-        result.textContent = "⬆️ Es más grande";
 
-    } else {
+    game.innerHTML = `
 
-        result.textContent = "⬇️ Es más pequeño";
+        <div
+            class="reaction"
+            id="reaction">
+
+            PREPÁRATE...
+
+        </div>
+
+
+        <div
+            class="status"
+            id="reactStatus">
+        </div>
+
+
+        <div class="gameControls">
+
+            <button
+                class="gameBtn"
+                id="reactRestart">
+
+                Reintentar
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    let start=0;
+    let armed=false;
+
+
+    function reset(){
+
+        armed=false;
+
+        start=0;
+
+
+        $("#reaction")
+        .classList.remove(
+            "go"
+        );
+
+
+        $("#reaction")
+        .textContent =
+            "PREPÁRATE...";
+
+
+        $("#reactStatus")
+        .textContent =
+            "";
+
+
+        later(
+            () => {
+
+                armed=true;
+
+                start =
+                    performance.now();
+
+
+                $("#reaction")
+                .classList.add(
+                    "go"
+                );
+
+
+                $("#reaction")
+                .textContent =
+                    "¡AHORA!";
+
+            },
+            1200+
+            Math.random()*3000
+        );
 
     }
 
-}
+
+    $("#reaction")
+    .addEventListener(
+        "pointerdown",
+        () => {
+
+            if(!armed){
+
+                $("#reactStatus")
+                .textContent =
+                    "Demasiado pronto 😈";
+
+                return;
+
+            }
 
 
-/* =========================
-   REFLEJOS
-========================= */
+            const ms =
+                Math.round(
+                    performance.now()-
+                    start
+                );
 
-function reactionGame() {
 
-    document.getElementById("modalTitle").textContent = "⚡ Reflejos";
+            $("#reactStatus")
+            .textContent =
+                `Has tardado ${ms} ms ⚡`;
 
-    document.getElementById("gameArea").innerHTML = `
 
-        <p style="text-align:center">
-            Espera a que cambie y toca rápidamente.
-        </p>
+            addScore(
+                Math.max(
+                    1,
+                    Math.round(
+                        80-ms/10
+                    )
+                )
+            );
 
-        <div class="reaction-box" id="reactionBox">
-            Espera...
+
+            armed=false;
+
+        }
+    );
+
+
+    $("#reactRestart")
+    .addEventListener(
+        "click",
+        reset
+    );
+
+
+    reset();
+
+};
+
+
+/* =========================================================
+   CLICKER
+========================================================= */
+
+games.clicker = function(){
+
+    open(
+        "💜 Corazón infinito",
+        "Tienes 10 segundos. Haz tantos clics como puedas."
+    );
+
+
+    game.innerHTML = `
+
+        <div
+            class="bigHeart"
+            id="clickHeart">
+
+            💜
+
         </div>
 
-        <p id="reactionResult" style="text-align:center;margin-top:15px"></p>
+
+        <div
+            class="status"
+            id="clickStatus">
+
+            Pulsa el corazón para empezar.
+
+        </div>
 
     `;
 
-    let box = document.getElementById("reactionBox");
-    let start;
 
-    let delay = 1500 + Math.random()*3000;
+    let count=0;
 
-    setTimeout(() => {
+    let started=false;
 
-        box.classList.add("ready");
+    let start=0;
 
-        box.textContent = "¡AHORA!";
 
-        start = performance.now();
+    $("#clickHeart")
+    .addEventListener(
+        "pointerdown",
+        () => {
 
-    },delay);
+            if(!started){
 
-    box.onclick = function() {
+                started=true;
 
-        if(!start) {
+                start =
+                    performance.now();
 
-            document.getElementById("reactionResult").textContent =
-                "¡Demasiado pronto! 😈";
+
+                interval(
+                    () => {
+
+                        const remaining =
+                            Math.max(
+                                0,
+                                10-
+                                Math.floor(
+                                    (
+                                        performance.now()-
+                                        start
+                                    )/1000
+                                )
+                            );
+
+
+                        $("#clickStatus")
+                        .textContent =
+                            `❤️ ${count} · ${remaining}s`;
+
+
+                        if(
+                            remaining===0
+                        ){
+
+                            started=false;
+
+                            alert(
+                                `¡Has conseguido ${count} corazones! 💜`
+                            );
+
+                        }
+
+                    },
+                    250
+                );
+
+            }
+
+
+            if(started){
+
+                count++;
+
+                addScore(1);
+
+            }
+
+        }
+    );
+
+};
+
+
+/* =========================================================
+   TEST DE PAREJA
+========================================================= */
+
+games.love = function(){
+
+    open(
+        "🥰 Test de pareja",
+        "No hay respuestas incorrectas..."
+    );
+
+
+    const questions=[
+
+        [
+            "¿Qué plan elegirías conmigo?",
+            "Una cita tranquila 💜",
+            "Una aventura ✨"
+        ],
+
+        [
+            "¿Qué regalo prefieres?",
+            "Un detalle hecho a mano 🥰",
+            "Una sorpresa enorme 🎁"
+        ],
+
+        [
+            "¿Qué hacemos después?",
+            "Ver una peli 🍿",
+            "Salir juntos 🌙"
+        ]
+
+    ];
+
+
+    let current=0;
+
+    let romantic=0;
+
+
+    function render(){
+
+        if(
+            current>=
+            questions.length
+        ){
+
+            game.innerHTML = `
+
+                <div class="choice">
+
+                    <div
+                        style="font-size:65px">
+
+                        🥰💜
+
+                    </div>
+
+                    <h3>
+                        Resultado
+                    </h3>
+
+                    <p>
+                        Has elegido
+                        ${romantic}
+                        veces la opción romántica.
+                    </p>
+
+                    <p>
+                        La respuesta correcta era:
+                        pasar tiempo juntos. ❤️
+                    </p>
+
+                </div>
+
+            `;
+
+
+            addScore(20);
 
             return;
 
         }
 
-        let time = Math.round(performance.now()-start);
 
-        document.getElementById("reactionResult").textContent =
-            "Tu tiempo: " + time + " ms ⚡";
-
-        addScore(Math.max(1,Math.round(100-time/10)));
-
-        start = null;
-
-    };
-
-}
+        const question =
+            questions[current];
 
 
-/* =========================
-   CLICKER
-========================= */
+        game.innerHTML = `
 
-function clickerGame() {
+            <div class="choice">
 
-    document.getElementById("modalTitle").textContent = "💜 Corazón infinito";
+                <h3>
+                    ${question[0]}
+                </h3>
 
-    document.getElementById("gameArea").innerHTML = `
 
-        <div style="text-align:center">
+                <button
+                    class="gameBtn"
+                    id="answerA">
 
-            <div id="bigHeart"
-                style="
-                font-size:110px;
-                cursor:pointer;
-                user-select:none;
-                transition:.1s;
-            ">
-                💜
+                    ${question[1]}
+
+                </button>
+
+
+                <button
+                    class="gameBtn"
+                    id="answerB">
+
+                    ${question[2]}
+
+                </button>
+
+
+                <p
+                    class="status">
+
+                    Pregunta
+                    ${current+1}/3
+
+                </p>
+
             </div>
 
-            <p>
-                Has pulsado <span id="clickCount">0</span> veces.
-            </p>
-
-        </div>
-
-    `;
-
-    let count = 0;
-
-    document.getElementById("bigHeart").onclick = function() {
-
-        count++;
-
-        document.getElementById("clickCount").textContent = count;
-
-        this.style.transform = "scale(.8)";
-
-        setTimeout(() => this.style.transform="",100);
-
-        addScore(1);
-
-    };
-
-}
+        `;
 
 
-/* =========================
-   TEST AMOR
-========================= */
+        $("#answerA")
+        .addEventListener(
+            "click",
+            () => {
 
-function loveGame() {
+                romantic++;
 
-    document.getElementById("modalTitle").textContent =
-        "🥰 Una pregunta importante";
+                current++;
 
-    document.getElementById("gameArea").innerHTML = `
+                render();
 
-        <div style="text-align:center">
-
-            <div style="font-size:70px">
-                💜
-            </div>
-
-            <p style="font-size:20px;line-height:1.6">
-                ¿Quién es la persona más increíble
-                de todo el universo?
-            </p>
-
-            <button class="game-button" onclick="loveAnswer()">
-                Yo 😎
-            </button>
-
-            <button class="game-button" onclick="loveAnswer()">
-                Tú 🥰
-            </button>
-
-            <p id="loveResult" style="margin-top:20px"></p>
-
-        </div>
-
-    `;
-
-}
+            }
+        );
 
 
-function loveAnswer() {
+        $("#answerB")
+        .addEventListener(
+            "click",
+            () => {
 
-    document.getElementById("loveResult").innerHTML = `
-        Obviamente tú. ❤️<br><br>
-        No hacía falta ni preguntarlo.
-    `;
+                current++;
 
-    addScore(10);
+                render();
 
-}
+            }
+        );
 
-
-/* =========================
-   SORPRESA
-========================= */
-
-function surpriseGame() {
-
-    document.getElementById("modalTitle").textContent =
-        "🎁 Sorpresa";
-
-    document.getElementById("gameArea").innerHTML = `
-
-        <div style="text-align:center;padding:25px">
-
-            <div style="
-                font-size:100px;
-                cursor:pointer;
-            "
-            onclick="revealSurprise()">
-                🎁
-            </div>
-
-            <p>
-                Toca el regalo...
-            </p>
-
-            <div id="surpriseText"></div>
-
-        </div>
-
-    `;
-
-}
-
-
-function revealSurprise() {
-
-    document.getElementById("surpriseText").innerHTML = `
-
-        <div style="
-            margin-top:25px;
-            padding:20px;
-            border-radius:20px;
-            background:rgba(139,92,246,.15);
-        ">
-
-            <div style="font-size:50px">
-                🥰💜✨
-            </div>
-
-            <p style="
-                font-size:20px;
-                line-height:1.7;
-                margin-top:15px;
-            ">
-                Mi regalo no cabe dentro de una caja,
-                porque es poder compartir momentos
-                contigo.
-                <br><br>
-                Feliz cumpleaños, mi niña. 💜
-            </p>
-
-        </div>
-
-    `;
-
-    addScore(25);
-
-}
-
-
-/* Cerrar pulsando fuera */
-
-document.getElementById("modal").addEventListener("click", function(e) {
-
-    if(e.target === this) {
-        closeModal();
     }
 
-});
+
+    render();
+
+};
+
+
+/* =========================================================
+   SORPRESA
+========================================================= */
+
+games.surprise = function(){
+
+    open(
+        "🎁 La sorpresa",
+        "El último regalo no se puede ganar con puntos."
+    );
+
+
+    game.innerHTML = `
+
+        <div class="choice">
+
+            <div
+                id="gift"
+                style="
+                    font-size:110px;
+                    cursor:pointer;
+                ">
+
+                🎁
+
+            </div>
+
+
+            <p>
+                Toca el regalo.
+            </p>
+
+
+            <div
+                id="surpriseText">
+            </div>
+
+        </div>
+
+    `;
+
+
+    $("#gift")
+    .addEventListener(
+        "click",
+        () => {
+
+            $("#surpriseText")
+            .innerHTML = `
+
+                <div class="letterText">
+
+                    ✨ Has encontrado
+                    la sorpresa ✨
+
+                    <br><br>
+
+                    Mi regalo favorito eres tú.
+
+                    <br><br>
+
+                    No importa cuántos juegos
+                    hagas ni cuántos puntos
+                    consigas.
+
+                    <br><br>
+
+                    Lo importante es que hoy
+                    tengas una sonrisa.
+
+                    <br><br>
+
+                    <strong>
+                        Feliz cumpleaños,
+                        mi amor. 💜
+                    </strong>
+
+                </div>
+
+            `;
+
+
+            addScore(50);
+
+        }
+    );
+
+};
 
 </script>
 
