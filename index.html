@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Para ti 💜</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --purple: #8b5cf6;
+    --purple2: #a78bfa;
+    --dark: #160d24;
+    --dark2: #211032;
+    --white: #fff;
+    --soft: #eadcff;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(168,85,247,.22), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(139,92,246,.18), transparent 30%),
+        linear-gradient(135deg, #100817, #1d0d2b, #12091c);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Fondo animado */
+
+.background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: .35;
+    animation: float 10s infinite ease-in-out;
+}
+
+.orb:nth-child(1) {
+    width: 220px;
+    height: 220px;
+    background: #a855f7;
+    left: -60px;
+    top: 10%;
+}
+
+.orb:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    background: #7c3aed;
+    right: -100px;
+    top: 50%;
+    animation-delay: -3s;
+}
+
+.orb:nth-child(3) {
+    width: 180px;
+    height: 180px;
+    background: #c084fc;
+    left: 40%;
+    bottom: -80px;
+    animation-delay: -6s;
+}
+
+@keyframes float {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(30px,-40px) scale(1.15); }
+}
+
+/* Pantalla inicial */
+
+.welcome {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    text-align: center;
+}
+
+.welcome-box {
+    max-width: 650px;
+    animation: appear .9s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.birthday-icon {
+    font-size: 75px;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.welcome h1 {
+    font-size: clamp(42px, 9vw, 75px);
+    background: linear-gradient(90deg,#fff,#d8b4fe,#a78bfa,#fff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradient 5s infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0%; }
+    50% { background-position: 100%; }
+    100% { background-position: 0%; }
+}
+
+.welcome p {
+    color: #d8c9e8;
+    font-size: 18px;
+    margin: 15px auto 30px;
+    line-height: 1.6;
+}
+
+.start-btn,
+.back-btn {
+    border: none;
+    border-radius: 50px;
+    padding: 15px 28px;
+    color: white;
+    background: linear-gradient(135deg,#8b5cf6,#a855f7);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(139,92,246,.3);
+    transition: .25s;
+}
+
+.start-btn:hover,
+.back-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+}
+
+/* App */
+
+.app {
+    display: none;
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px 18px 50px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.score {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 9px 15px;
+    border-radius: 30px;
+    backdrop-filter: blur(15px);
+}
+
+/* Carta */
+
+.letter {
+    position: relative;
+    background:
+        linear-gradient(135deg,rgba(139,92,246,.28),rgba(168,85,247,.08));
+    border: 1px solid rgba(196,181,253,.25);
+    border-radius: 25px;
+    padding: 28px;
+    margin-bottom: 35px;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.letter:hover {
+    transform: translateY(-4px);
+}
+
+.letter-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.letter h2 {
+    margin-bottom: 7px;
+}
+
+.letter p {
+    color: #d6c7e7;
+}
+
+/* Juegos */
+
+.section-title {
+    margin-bottom: 17px;
+    font-size: 25px;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 15px;
+}
+
+.game-card {
+    background: rgba(255,255,255,.065);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 22px;
+    padding: 23px;
+    cursor: pointer;
+    transition: .25s;
+    backdrop-filter: blur(15px);
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(167,139,250,.5);
+    background: rgba(139,92,246,.12);
+}
+
+.game-icon {
+    font-size: 38px;
+    margin-bottom: 13px;
+}
+
+.game-card h3 {
+    margin-bottom: 6px;
+}
+
+.game-card p {
+    color: #bcaaca;
+    font-size: 14px;
+}
+
+/* Modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,2,10,.75);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 18px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: min(650px,100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: linear-gradient(145deg,#251035,#160b22);
+    border: 1px solid rgba(196,181,253,.2);
+    border-radius: 28px;
+    padding: 25px;
+    position: relative;
+    animation: modalIn .3s ease;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.close {
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    border: none;
+    background: rgba(255,255,255,.08);
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+/* Game area */
+
+.game-area {
+    margin-top: 15px;
+    min-height: 300px;
+    position: relative;
+}
+
+.game-button {
+    border: none;
+    background: linear-gradient(135deg,#8b5cf6,#a855f7);
+    color: white;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+/* Billar */
+
+.pool-table {
+    width: 100%;
+    max-width: 550px;
+    aspect-ratio: 1.7;
+    background: #40165c;
+    border: 15px solid #5c2a19;
+    border-radius: 20px;
+    margin: auto;
+    position: relative;
+    box-shadow: inset 0 0 0 5px #1d672d;
+}
+
+.hole {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: #08040b;
+    border-radius: 50%;
+}
+
+.hole:nth-child(1){top:-18px;left:-18px}
+.hole:nth-child(2){top:-18px;right:-18px}
+.hole:nth-child(3){bottom:-18px;left:-18px}
+.hole:nth-child(4){bottom:-18px;right:-18px}
+.hole:nth-child(5){top:-18px;left:50%;transform:translateX(-50%)}
+.hole:nth-child(6){bottom:-18px;left:50%;transform:translateX(-50%)}
+
+.ball {
+    position:absolute;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:white;
+    box-shadow: 0 2px 8px #000;
+    cursor:pointer;
+}
+
+/* Dardos */
+
+.dartboard {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    margin: auto;
+    background:
+        repeating-conic-gradient(
+            #22102d 0deg 18deg,
+            #713d88 18deg 36deg
+        );
+    border: 10px solid #111;
+    box-shadow: 0 10px 30px #0008;
+    position: relative;
+    cursor: crosshair;
+}
+
+.dart-center {
+    position:absolute;
+    width:50px;
+    height:50px;
+    background:#8b5cf6;
+    border-radius:50%;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+/* Memoria */
+
+.memory-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    max-width:400px;
+    margin:auto;
+}
+
+.memory-card {
+    aspect-ratio:1;
+    border:none;
+    border-radius:14px;
+    background:#6d28d9;
+    color:transparent;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.memory-card.flipped,
+.memory-card.matched {
+    background:#a78bfa;
+    color:white;
+}
+
+/* Atrapar */
+
+.catch-area,
+.balloon-area,
+.star-area {
+    height:320px;
+    border-radius:20px;
+    background:rgba(0,0,0,.18);
+    position:relative;
+    overflow:hidden;
+}
+
+.catch-heart,
+.star,
+.balloon {
+    position:absolute;
+    cursor:pointer;
+    user-select:none;
+    animation: pop .2s ease;
+}
+
+.catch-heart {
+    font-size:42px;
+}
+
+.star {
+    font-size:38px;
+}
+
+.balloon {
+    font-size:48px;
+}
+
+@keyframes pop {
+    from {transform:scale(.4);opacity:0}
+    to {transform:scale(1);opacity:1}
+}
+
+/* Número */
+
+.number-game {
+    text-align:center;
+}
+
+.number-game input {
+    width:150px;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    outline:none;
+    text-align:center;
+    font-size:18px;
+}
+
+/* Moneda */
+
+.coin {
+    width:130px;
+    height:130px;
+    margin:25px auto;
+    border-radius:50%;
+    background:linear-gradient(145deg,#c084fc,#7c3aed);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    box-shadow:0 10px 30px #0006;
+}
+
+/* Reacción */
+
+.reaction {
+    text-align:center;
+}
+
+.reaction-box {
+    height:200px;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    font-weight:bold;
+    background:#321341;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+.reaction-box.ready {
+    background:#7c3aed;
+}
+
+/* Footer */
+
+footer {
+    text-align:center;
+    color:#806d8d;
+    margin-top:50px;
+    font-size:13px;
+}
+
+/* Responsive */
+
+@media(max-width:600px) {
+
+    .app {
+        padding:18px 13px 40px;
+    }
+
+    .games {
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .game-card {
+        padding:17px;
+        border-radius:18px;
+    }
+
+    .game-icon {
+        font-size:31px;
+    }
+
+    .game-card h3 {
+        font-size:15px;
+    }
+
+    .game-card p {
+        font-size:12px;
+    }
+
+    .letter {
+        padding:22px 15px;
+    }
+
+    .modal-box {
+        padding:20px;
+    }
+
+    .memory-grid {
+        gap:7px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+</div>
+
+<!-- PORTADA -->
+
+<section class="welcome" id="welcome">
+
+    <div class="welcome-box">
+
+        <div class="birthday-icon">🎂</div>
+
+        <h1>Feliz cumpleaños 💜</h1>
+
+        <p>
+            He preparado un pequeño lugar solo para ti.<br>
+            Hay juegos, sorpresas y una cosita que quiero decirte.
+        </p>
+
+        <button class="start-btn" onclick="startApp()">
+            Entrar a tu regalo ✨
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- APP -->
+
+<main class="app" id="app">
+
+    <header class="header">
+
+        <div class="logo">
+            💜 Para ti
+        </div>
+
+        <div class="score">
+            ⭐ <span id="score">0</span>
+        </div>
+
+    </header>
+
+
+    <!-- CARTA -->
+
+    <div class="letter" onclick="openLetter()">
+
+        <div class="letter-icon">💌</div>
+
+        <h2>Tienes una carta</h2>
+
+        <p>Toca aquí para abrirla...</p>
+
+    </div>
+
+
+    <h2 class="section-title">
+        🎮 Mini juegos
+    </h2>
+
+
+    <section class="games">
+
+        <div class="game-card" onclick="openGame('pool')">
+            <div class="game-icon">🎱</div>
+            <h3>Billar</h3>
+            <p>Mete las bolas en los agujeros.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('darts')">
+            <div class="game-icon">🎯</div>
+            <h3>Dardos</h3>
+            <p>Intenta acertar en el centro.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('memory')">
+            <div class="game-icon">🧠</div>
+            <h3>Memoria</h3>
+            <p>Encuentra todas las parejas.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('hearts')">
+            <div class="game-icon">❤️</div>
+            <h3>Atrapa corazones</h3>
+            <p>Consigue tantos como puedas.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('coin')">
+            <div class="game-icon">🪙</div>
+            <h3>Cara o cruz</h3>
+            <p>¿Qué saldrá?</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('stars')">
+            <div class="game-icon">⭐</div>
+            <h3>Atrapa estrellas</h3>
+            <p>No dejes escapar ninguna.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('balloons')">
+            <div class="game-icon">🎈</div>
+            <h3>Globos</h3>
+            <p>Explota todos los que puedas.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('number')">
+            <div class="game-icon">🔢</div>
+            <h3>Adivina el número</h3>
+            <p>Encuentra el número secreto.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('reaction')">
+            <div class="game-icon">⚡</div>
+            <h3>Reflejos</h3>
+            <p>Haz clic cuando cambie.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('clicker')">
+            <div class="game-icon">💜</div>
+            <h3>Corazón infinito</h3>
+            <p>Haz clic tantas veces como puedas.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('love')">
+            <div class="game-icon">🥰</div>
+            <h3>¿Cuánto me quieres?</h3>
+            <p>Un pequeño test.</p>
+        </div>
+
+        <div class="game-card" onclick="openGame('surprise')">
+            <div class="game-icon">🎁</div>
+            <h3>Sorpresa</h3>
+            <p>Este juego es diferente...</p>
+        </div>
+
+    </section>
+
+    <footer>
+        Hecho con mucho cariño 💜
+    </footer>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal()">×</button>
+
+        <h2 class="modal-title" id="modalTitle"></h2>
+
+        <div class="game-area" id="gameArea"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let score = 0;
+
+function addScore(points) {
+
+    score += points;
+
+    document.getElementById("score").textContent = score;
+
+}
+
+
+function startApp() {
+
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+}
+
+
+function openLetter() {
+
+    document.getElementById("modalTitle").textContent = "💌 Una carta para ti";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <div style="text-align:center;padding:20px 5px">
+
+            <div style="font-size:60px;margin-bottom:20px">💜</div>
+
+            <p style="
+                font-size:19px;
+                line-height:1.8;
+                color:#eadcff;
+            ">
+                Feliz cumpleaños, preciosa.<br><br>
+
+                Espero que hoy sonrías muchísimo,
+                que disfrutes de cada momento
+                y que nunca olvides lo especial
+                que eres para mí.<br><br>
+
+                He preparado todo esto para que
+                tengas un pequeño rincón hecho
+                solamente para ti.<br><br>
+
+                <strong>
+                Te quiero muchísimo. 💜
+                </strong>
+            </p>
+
+        </div>
+    `;
+
+    openModal();
+
+}
+
+
+function openModal() {
+
+    document.getElementById("modal").classList.add("active");
+
+}
+
+
+function closeModal() {
+
+    document.getElementById("modal").classList.remove("active");
+
+}
+
+
+function openGame(game) {
+
+    openModal();
+
+    if(game === "pool") poolGame();
+    if(game === "darts") dartsGame();
+    if(game === "memory") memoryGame();
+    if(game === "hearts") heartsGame();
+    if(game === "coin") coinGame();
+    if(game === "stars") starsGame();
+    if(game === "balloons") balloonsGame();
+    if(game === "number") numberGame();
+    if(game === "reaction") reactionGame();
+    if(game === "clicker") clickerGame();
+    if(game === "love") loveGame();
+    if(game === "surprise") surpriseGame();
+
+}
+
+
+/* =========================
+   BILLAR
+========================= */
+
+function poolGame() {
+
+    document.getElementById("modalTitle").textContent = "🎱 Billar";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center;margin-bottom:15px">
+            Haz clic en las bolas para meterlas.
+        </p>
+
+        <div class="pool-table" id="poolTable">
+
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+
+        </div>
+
+    `;
+
+    let table = document.getElementById("poolTable");
+
+    for(let i=0;i<6;i++) {
+
+        let ball = document.createElement("div");
+
+        ball.className = "ball";
+
+        ball.style.left = (15 + Math.random()*70) + "%";
+        ball.style.top = (15 + Math.random()*65) + "%";
+
+        ball.style.background = [
+            "#fff",
+            "#f59e0b",
+            "#ef4444",
+            "#3b82f6",
+            "#22c55e",
+            "#e879f9"
+        ][i];
+
+        ball.onclick = function() {
+
+            ball.remove();
+
+            addScore(5);
+
+        };
+
+        table.appendChild(ball);
+
+    }
+
+}
+
+
+/* =========================
+   DARDOS
+========================= */
+
+function dartsGame() {
+
+    document.getElementById("modalTitle").textContent = "🎯 Dardos";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center">
+            Toca el centro de la diana.
+        </p>
+
+        <div class="dartboard" id="dartboard">
+
+            <div class="dart-center"></div>
+
+        </div>
+
+        <p id="dartScore" style="text-align:center;margin-top:15px">
+            Puntuación: 0
+        </p>
+    `;
+
+    let board = document.getElementById("dartboard");
+
+    board.onclick = function(e) {
+
+        let rect = board.getBoundingClientRect();
+
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        let center = rect.width/2;
+
+        let distance = Math.sqrt(
+            Math.pow(x-center,2) +
+            Math.pow(y-center,2)
+        );
+
+        let points = Math.max(
+            1,
+            Math.round(30-distance/3)
+        );
+
+        document.getElementById("dartScore").textContent =
+            "Puntuación: " + points;
+
+        addScore(points);
+
+    };
+
+}
+
+
+/* =========================
+   MEMORIA
+========================= */
+
+function memoryGame() {
+
+    document.getElementById("modalTitle").textContent = "🧠 Memoria";
+
+    const emojis = ["💜","💜","❤️","❤️","🌸","🌸","⭐","⭐"];
+
+    emojis.sort(() => Math.random()-.5);
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center;margin-bottom:15px">
+            Encuentra las parejas.
+        </p>
+
+        <div class="memory-grid" id="memoryGrid"></div>
+
+    `;
+
+    let grid = document.getElementById("memoryGrid");
+
+    let first = null;
+    let locked = false;
+    let matched = 0;
+
+    emojis.forEach(emoji => {
+
+        let card = document.createElement("button");
+
+        card.className = "memory-card";
+
+        card.textContent = emoji;
+
+        card.onclick = function() {
+
+            if(locked || card.classList.contains("flipped")) return;
+
+            card.classList.add("flipped");
+
+            if(!first) {
+
+                first = card;
+
+            } else {
+
+                if(first.textContent === card.textContent) {
+
+                    first.classList.add("matched");
+                    card.classList.add("matched");
+
+                    matched += 2;
+
+                    addScore(10);
+
+                    first = null;
+
+                    if(matched === emojis.length) {
+
+                        setTimeout(() => {
+                            alert("¡Has encontrado todas! 💜");
+                        },200);
+
+                    }
+
+                } else {
+
+                    locked = true;
+
+                    setTimeout(() => {
+
+                        first.classList.remove("flipped");
+                        card.classList.remove("flipped");
+
+                        first = null;
+                        locked = false;
+
+                    },700);
+
+                }
+
+            }
+
+        };
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   CORAZONES
+========================= */
+
+function heartsGame() {
+
+    document.getElementById("modalTitle").textContent = "❤️ Atrapa corazones";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center">
+            ¡Tienes 20 segundos!
+        </p>
+
+        <div class="catch-area" id="heartArea"></div>
+
+        <p style="text-align:center;margin-top:10px">
+            ❤️ <span id="heartScore">0</span>
+        </p>
+    `;
+
+    let area = document.getElementById("heartArea");
+    let points = 0;
+    let active = true;
+
+    function spawn() {
+
+        if(!active) return;
+
+        let heart = document.createElement("div");
+
+        heart.className = "catch-heart";
+        heart.textContent = "❤️";
+
+        heart.style.left = Math.random()*85 + "%";
+        heart.style.top = Math.random()*80 + "%";
+
+        heart.onclick = function() {
+
+            points++;
+
+            document.getElementById("heartScore").textContent = points;
+
+            addScore(1);
+
+            heart.remove();
+
+        };
+
+        area.appendChild(heart);
+
+        setTimeout(() => {
+
+            if(heart.parentNode) heart.remove();
+
+        },1000);
+
+    }
+
+    let interval = setInterval(spawn,500);
+
+    setTimeout(() => {
+
+        active = false;
+        clearInterval(interval);
+
+        alert("¡Has conseguido " + points + " corazones! ❤️");
+
+    },20000);
+
+}
+
+
+/* =========================
+   MONEDA
+========================= */
+
+function coinGame() {
+
+    document.getElementById("modalTitle").textContent = "🪙 Cara o cruz";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <div class="coin" id="coin">
+            🪙
+        </div>
+
+        <div style="text-align:center">
+
+            <button class="game-button" onclick="flipCoin()">
+                Lanzar moneda
+            </button>
+
+            <p id="coinResult" style="margin-top:15px">
+                ¿Cara o cruz?
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+function flipCoin() {
+
+    let result = Math.random() < .5 ? "🙂 CARA" : "🟣 CRUZ";
+
+    let coin = document.getElementById("coin");
+
+    coin.style.transform = "rotateY(720deg)";
+
+    setTimeout(() => {
+
+        coin.style.transform = "";
+
+        document.getElementById("coinResult").textContent = result;
+
+    },500);
+
+}
+
+
+/* =========================
+   ESTRELLAS
+========================= */
+
+function starsGame() {
+
+    document.getElementById("modalTitle").textContent = "⭐ Atrapa estrellas";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center">
+            ¡Atrapa 10 estrellas!
+        </p>
+
+        <div class="star-area" id="starArea"></div>
+
+        <p style="text-align:center">
+            ⭐ <span id="starScore">0</span>/10
+        </p>
+    `;
+
+    let area = document.getElementById("starArea");
+    let points = 0;
+
+    function createStar() {
+
+        let star = document.createElement("div");
+
+        star.className = "star";
+        star.textContent = "⭐";
+
+        star.style.left = Math.random()*85 + "%";
+        star.style.top = Math.random()*80 + "%";
+
+        star.onclick = function() {
+
+            points++;
+
+            document.getElementById("starScore").textContent = points;
+
+            addScore(2);
+
+            star.remove();
+
+            if(points >= 10) {
+
+                alert("¡Has atrapado todas las estrellas! ✨");
+
+            } else {
+
+                createStar();
+
+            }
+
+        };
+
+        area.appendChild(star);
+
+    }
+
+    createStar();
+
+}
+
+
+/* =========================
+   GLOBOS
+========================= */
+
+function balloonsGame() {
+
+    document.getElementById("modalTitle").textContent = "🎈 Explota los globos";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center">
+            ¡Explota todos!
+        </p>
+
+        <div class="balloon-area" id="balloonArea"></div>
+
+    `;
+
+    let area = document.getElementById("balloonArea");
+
+    for(let i=0;i<12;i++) {
+
+        let balloon = document.createElement("div");
+
+        balloon.className = "balloon";
+
+        balloon.textContent = ["🎈","🎈","🎈","🎈"][Math.floor(Math.random()*4)];
+
+        balloon.style.left = Math.random()*85 + "%";
+        balloon.style.top = Math.random()*80 + "%";
+
+        balloon.onclick = function() {
+
+            balloon.textContent = "💥";
+
+            addScore(3);
+
+            setTimeout(() => balloon.remove(),150);
+
+        };
+
+        area.appendChild(balloon);
+
+    }
+
+}
+
+
+/* =========================
+   NÚMERO
+========================= */
+
+let secretNumber = 0;
+
+function numberGame() {
+
+    secretNumber = Math.floor(Math.random()*50)+1;
+
+    document.getElementById("modalTitle").textContent =
+        "🔢 Adivina el número";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <div class="number-game">
+
+            <p>
+                Estoy pensando en un número del 1 al 50.
+            </p>
+
+            <input
+                id="numberInput"
+                type="number"
+                min="1"
+                max="50"
+                placeholder="Número"
+            >
+
+            <br>
+
+            <button class="game-button" onclick="checkNumber()">
+                Comprobar
+            </button>
+
+            <p id="numberResult" style="margin-top:20px"></p>
+
+        </div>
+
+    `;
+
+}
+
+
+function checkNumber() {
+
+    let value = Number(
+        document.getElementById("numberInput").value
+    );
+
+    let result = document.getElementById("numberResult");
+
+    if(value === secretNumber) {
+
+        result.textContent = "🎉 ¡Correcto!";
+
+        addScore(20);
+
+    } else if(value < secretNumber) {
+
+        result.textContent = "⬆️ Es más grande";
+
+    } else {
+
+        result.textContent = "⬇️ Es más pequeño";
+
+    }
+
+}
+
+
+/* =========================
+   REFLEJOS
+========================= */
+
+function reactionGame() {
+
+    document.getElementById("modalTitle").textContent = "⚡ Reflejos";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <p style="text-align:center">
+            Espera a que cambie y toca rápidamente.
+        </p>
+
+        <div class="reaction-box" id="reactionBox">
+            Espera...
+        </div>
+
+        <p id="reactionResult" style="text-align:center;margin-top:15px"></p>
+
+    `;
+
+    let box = document.getElementById("reactionBox");
+    let start;
+
+    let delay = 1500 + Math.random()*3000;
+
+    setTimeout(() => {
+
+        box.classList.add("ready");
+
+        box.textContent = "¡AHORA!";
+
+        start = performance.now();
+
+    },delay);
+
+    box.onclick = function() {
+
+        if(!start) {
+
+            document.getElementById("reactionResult").textContent =
+                "¡Demasiado pronto! 😈";
+
+            return;
+
+        }
+
+        let time = Math.round(performance.now()-start);
+
+        document.getElementById("reactionResult").textContent =
+            "Tu tiempo: " + time + " ms ⚡";
+
+        addScore(Math.max(1,Math.round(100-time/10)));
+
+        start = null;
+
+    };
+
+}
+
+
+/* =========================
+   CLICKER
+========================= */
+
+function clickerGame() {
+
+    document.getElementById("modalTitle").textContent = "💜 Corazón infinito";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <div style="text-align:center">
+
+            <div id="bigHeart"
+                style="
+                font-size:110px;
+                cursor:pointer;
+                user-select:none;
+                transition:.1s;
+            ">
+                💜
+            </div>
+
+            <p>
+                Has pulsado <span id="clickCount">0</span> veces.
+            </p>
+
+        </div>
+
+    `;
+
+    let count = 0;
+
+    document.getElementById("bigHeart").onclick = function() {
+
+        count++;
+
+        document.getElementById("clickCount").textContent = count;
+
+        this.style.transform = "scale(.8)";
+
+        setTimeout(() => this.style.transform="",100);
+
+        addScore(1);
+
+    };
+
+}
+
+
+/* =========================
+   TEST AMOR
+========================= */
+
+function loveGame() {
+
+    document.getElementById("modalTitle").textContent =
+        "🥰 Una pregunta importante";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <div style="text-align:center">
+
+            <div style="font-size:70px">
+                💜
+            </div>
+
+            <p style="font-size:20px;line-height:1.6">
+                ¿Quién es la persona más increíble
+                de todo el universo?
+            </p>
+
+            <button class="game-button" onclick="loveAnswer()">
+                Yo 😎
+            </button>
+
+            <button class="game-button" onclick="loveAnswer()">
+                Tú 🥰
+            </button>
+
+            <p id="loveResult" style="margin-top:20px"></p>
+
+        </div>
+
+    `;
+
+}
+
+
+function loveAnswer() {
+
+    document.getElementById("loveResult").innerHTML = `
+        Obviamente tú. ❤️<br><br>
+        No hacía falta ni preguntarlo.
+    `;
+
+    addScore(10);
+
+}
+
+
+/* =========================
+   SORPRESA
+========================= */
+
+function surpriseGame() {
+
+    document.getElementById("modalTitle").textContent =
+        "🎁 Sorpresa";
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <div style="text-align:center;padding:25px">
+
+            <div style="
+                font-size:100px;
+                cursor:pointer;
+            "
+            onclick="revealSurprise()">
+                🎁
+            </div>
+
+            <p>
+                Toca el regalo...
+            </p>
+
+            <div id="surpriseText"></div>
+
+        </div>
+
+    `;
+
+}
+
+
+function revealSurprise() {
+
+    document.getElementById("surpriseText").innerHTML = `
+
+        <div style="
+            margin-top:25px;
+            padding:20px;
+            border-radius:20px;
+            background:rgba(139,92,246,.15);
+        ">
+
+            <div style="font-size:50px">
+                🥰💜✨
+            </div>
+
+            <p style="
+                font-size:20px;
+                line-height:1.7;
+                margin-top:15px;
+            ">
+                Mi regalo no cabe dentro de una caja,
+                porque es poder compartir momentos
+                contigo.
+                <br><br>
+                Feliz cumpleaños, mi niña. 💜
+            </p>
+
+        </div>
+
+    `;
+
+    addScore(25);
+
+}
+
+
+/* Cerrar pulsando fuera */
+
+document.getElementById("modal").addEventListener("click", function(e) {
+
+    if(e.target === this) {
+        closeModal();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
